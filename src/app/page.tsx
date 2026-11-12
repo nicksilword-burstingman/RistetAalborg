@@ -3,11 +3,13 @@ import Link from "next/link";
 import { ArrowUpRight, Heart } from "lucide-react";
 import { products, formatPrice } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
+import { FilmIntro } from "@/components/film-intro";
 
 export default function Home() {
   return (
     <>
-      <section className="cover" aria-labelledby="cover-title">
+      <FilmIntro />
+      <section className="cover" id="forsiden" aria-labelledby="cover-title">
         <div className="editorial-kicker">
           <span>ET UAFHÆNGIGT MIKRORISTERI</span>
           <span>AALBORG, DANMARK · KAFFE MED PERSONLIGHED</span>
@@ -18,15 +20,15 @@ export default function Home() {
         <div className="cover-grid">
           <div className="cover-copy">
             <p className="eyebrow">
-              FRISKRISTET SPECIALKAFFE. TIL EN FAIR PRIS.
+              FRISKRISTET PÅ BESTILLING · SPECIALKAFFE TIL EN FAIR PRIS.
             </p>
-            <h1 id="cover-title">
+            <h2 id="cover-title">
               God kaffe.
               <br />
               Uden den
               <br />
               <em>høje pris.</em>
-            </h1>
+            </h2>
             <p>
               Til dig med fuld kalender. Til dig med tom kaffekop. Til dig, der
               bare er nysgerrig. Her er der plads til alle.
@@ -60,7 +62,10 @@ export default function Home() {
             <div className="cover-price">
               <span>DIN NÆSTE GODE KOP</span>
               <strong>{formatPrice(products[0].variants[0].priceOre)}</strong>
-              <small>250 g · eksempelpris inkl. moms</small>
+              <small>
+                <b>250 g</b>
+                <span>eksempelpris inkl. moms</span>
+              </small>
             </div>
             <span className="cover-scribble">
               Små batches.

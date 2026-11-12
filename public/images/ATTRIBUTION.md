@@ -24,3 +24,7 @@ The former `coffee-farm.jpg` asset below remains in the repository but is no lon
 - Source: https://commons.wikimedia.org/wiki/File:Coffee_and_banana_plantation_in_Uganda.jpg
 - License: Creative Commons Attribution-ShareAlike 4.0, https://creativecommons.org/licenses/by-sa/4.0/
 - Changes: Wikimedia resized rendition; cropped responsively on the page. This photograph and its adaptations remain available under CC BY-SA 4.0.
+
+## Homepage film
+
+- `video/espresso-ritual.webm` and `video/espresso-poster.jpg`: “Sunday Morning Espresso Routine – Grind + distribute + tamp + extraction (15-Second Abridged Version)” by Scott Schiller; source: https://commons.wikimedia.org/wiki/File:Sunday_Morning_Espresso_Routine_-_Grind_%2B_distribute_%2B_tamp_%2B_extraction_(15-Second_Abridged_Version).webm ; CC BY 2.0: https://creativecommons.org/licenses/by/2.0/ . Video plays muted and is cropped responsively; it illustrates a coffee ritual and is not footage of Ristet Aalborg. The poster is a Wikimedia thumbnail of the original video.
