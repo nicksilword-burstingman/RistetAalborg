@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 const config: NextConfig = {
   poweredByHeader: false,
+  outputFileTracingIncludes: {
+    "/om-os": ["./content/timeline.json"],
+    "/admin": ["./content/timeline.json"],
+    "/api/admin/timeline": ["./content/timeline.json"],
+  },
   async headers() {
     return [
       {

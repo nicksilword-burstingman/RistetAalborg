@@ -1,0 +1,206 @@
+{
+  "revision": 1,
+  "chapters": [
+    {
+      "id": "asien-2024",
+      "period": "2024",
+      "dateTime": "2024",
+      "title": "Det hele begyndte i Asien",
+      "body": "19 år gammel. Alene på eventyr i Asien.\n\nHer opstod en lidt skør idé: Hvad nu, hvis jeg kunne lave en aftale med nogle lokale kaffedyrkere og tage deres bønner med hjem til Danmark?\n\nDengang blev det ved tanken. Men den var ikke helt glemt.",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "src": "/images/timeline/asien.webp",
+          "alt": "På solorejse i Asien, med udsigt over bjergene og en sandwich i hånden.",
+          "caption": "En tur langt hjemmefra. Og en idé, der kom med hjem.",
+          "width": 1800,
+          "height": 1350,
+          "focusX": 50,
+          "focusY": 50,
+          "crop": "landscape",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 0,
+      "isFuture": false
+    },
+    {
+      "id": "aalborg-2025",
+      "period": "2025",
+      "dateTime": "2025",
+      "title": "En idé får nyt liv",
+      "body": "Ny by. Nyt studie. Samme gamle idé.\n\nJeg flyttede til Aalborg for at læse medicin og opdagede hurtigt, hvor dyr specialkaffe egentlig er – især på SU.\n\nHvorfor skulle virkelig god kaffe være en luksus?\n\nDer begyndte drømmen om Ristet Aalborg for alvor.",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "src": "/images/timeline/medicinstudiet.webp",
+          "alt": "Et spejlfoto i det hvide arbejdstøj som medicinstuderende.",
+          "caption": "Medicin på skemaet. Kaffe på hjernen.",
+          "width": 1350,
+          "height": 1800,
+          "focusX": 50,
+          "focusY": 40,
+          "crop": "portrait",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 1,
+      "isFuture": false
+    },
+    {
+      "id": "boenner-marts-2026",
+      "period": "Marts 2026",
+      "dateTime": "2026-03",
+      "title": "Jagten på den perfekte bønne",
+      "body": "Enhver god kaffe starter med gode bønner.\n\nJeg kastede mig ud i jagten på den helt rigtige kaffe at starte med. Efter masser af research faldt valget på en bønne fra Guatemala Antigua.\n\nNu manglede jeg bare en kafferister …",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "src": "/images/timeline/boennejagt.webp",
+          "alt": "På opdagelse blandt kaffebønner i et kaffeshowroom.",
+          "caption": "Nysgerrigheden skulle jo starte et sted.",
+          "width": 1350,
+          "height": 1800,
+          "focusX": 50,
+          "focusY": 48,
+          "crop": "portrait",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 2,
+      "isFuture": false
+    },
+    {
+      "id": "rister-foraar-2026",
+      "period": "Forår 2026",
+      "dateTime": "2026",
+      "title": "En rister med udfordringer",
+      "body": "En studerende har ikke ligefrem råd til et kæmpe professionelt risteri.\n\nJeg fandt en brugt rister, som desværre viste sig at være defekt. Så jeg måtte bestille reservedele helt fra USA, skille maskinen ad og lære at reparere og opgradere den.\n\nDet havde jeg aldrig prøvet før. Men det lykkedes!",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "src": "/images/timeline/rister-reparation.webp",
+          "alt": "Jeg reparerer den åbne kafferister med værktøj og reservedele på bordet.",
+          "caption": "Der var også lige en maskine, der skulle lære at virke.",
+          "width": 1179,
+          "height": 1568,
+          "focusX": 50,
+          "focusY": 45,
+          "crop": "portrait",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 3,
+      "isFuture": false
+    },
+    {
+      "id": "proeverist-2026",
+      "period": "Maj–juni 2026",
+      "dateTime": "2026-05",
+      "title": "Kaffe, eksamener og utallige prøverist",
+      "body": "Mens medicinstudiets eksamener nærmede sig, blev der også læst op på kafferistning.\n\nI halvanden måned blev der ristet, smagt, justeret og ristet igen.\n\nAlt fra temperaturer til ristningsprofiler skulle læres fra bunden. Det krævede tålmodighed – og rigtig mange kaffebønner.",
+      "images": [],
+      "sortOrder": 4,
+      "isFuture": false
+    },
+    {
+      "id": "smagsdommere-2026",
+      "period": "Sommer 2026",
+      "dateTime": "2026",
+      "title": "Familie og venner som smagsdommere",
+      "body": "Nu skulle kaffen stå sin prøve.\n\nFamilie og venner blev inviteret til at smage, sammenligne og give deres mening. Deres ærlige feedback var med til at forme den kaffe, jeg gerne ville kunne stå inde for.\n\nFor god kaffe bliver endnu bedre, når man deler den.",
+      "images": [],
+      "sortOrder": 5,
+      "isFuture": false
+    },
+    {
+      "id": "samuel-august-2026",
+      "period": "August 2026",
+      "dateTime": "2026-08",
+      "title": "Den sidste finpudsning",
+      "body": "Et stort skridt tættere på den færdige kaffe.\n\nMed professionel hjælp fra Samuel hos CoffeeAble fik jeg finjusteret smagsprofilen på Guatemala-bønnen.\n\nEfter måneders arbejde var kaffen endelig klar til salg.",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "src": "/images/timeline/samuel-og-kaffe.webp",
+          "alt": "Samuel og mig ved bordet med kaffekopper og bønner under arbejdet med smagsprofilen.",
+          "caption": "Sammen med Samuel hos CoffeeAble.",
+          "width": 1350,
+          "height": 1800,
+          "focusX": 50,
+          "focusY": 65,
+          "crop": "portrait",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 6,
+      "isFuture": false
+    },
+    {
+      "id": "identitet-september-2026",
+      "period": "September 2026",
+      "dateTime": "2026-09",
+      "title": "Fra kaffebønner til Ristet Aalborg",
+      "body": "God kaffe fortjener også en god indpakning.\n\nLeverandører til kaffeposer og labels skulle findes, og jeg gik i gang med at udvikle Ristet Aalborgs visuelle identitet.\n\nDet viste sig hurtigt, at der ligger næsten lige så mange beslutninger bag en kaffepose som bag selve kaffen.",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "src": "/images/timeline/guatemala-design.webp",
+          "alt": "Det farverige Guatemala Antigua-labeldesign til Ristet Aalborg med vulkaner og en tukan.",
+          "caption": "En bønne med sin helt egen personlighed.",
+          "width": 1024,
+          "height": 1536,
+          "focusX": 50,
+          "focusY": 50,
+          "crop": "contain",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 7,
+      "isFuture": false
+    },
+    {
+      "id": "sortiment-oktober-2026",
+      "period": "Oktober 2026",
+      "dateTime": "2026-10",
+      "title": "Flere bønner, flere smagsoplevelser",
+      "body": "Én kaffe var kun begyndelsen.\n\nJeg begyndte at arbejde med nye kaffebønner fra Brasilien og Etiopien for at skabe et bredere sortiment med forskellige smagsprofiler.\n\nMålet er, at der skal være noget for både den nysgerrige kaffedrikker og den passionerede kaffeentusiast.",
+      "images": [],
+      "sortOrder": 8,
+      "isFuture": false
+    },
+    {
+      "id": "webshop-november-2026",
+      "period": "November 2026",
+      "dateTime": "2026-11",
+      "title": "Ristet Aalborg begynder at tage form",
+      "body": "Fra kaffebønner og prøverist til webshop og eget design.\n\nLige nu arbejder jeg på at bygge Ristet Aalborgs helt egen hjemmeside og udvikle nye kaffelabels, der giver hver bønne sin egen personlighed.\n\nDet er ret vildt at se, hvordan alle de små brikker begynder at falde på plads. Det, der startede som en idé, begynder nu for alvor at ligne et rigtigt kaffebrand.",
+      "images": [
+        {
+          "id": "00000000-0000-4000-8000-000000000007",
+          "src": "/images/timeline/webshop-arbejde.webp",
+          "alt": "Jeg arbejder på Ristet Aalborgs hjemmeside med en kop kaffe ved computeren.",
+          "caption": "Kaffen inden for rækkevidde. Idéerne lidt over det hele.",
+          "width": 900,
+          "height": 1600,
+          "focusX": 50,
+          "focusY": 43,
+          "crop": "portrait",
+          "sortOrder": 0
+        }
+      ],
+      "sortOrder": 9,
+      "isFuture": false
+    },
+    {
+      "id": "fremtiden",
+      "period": "Fremtiden",
+      "dateTime": "",
+      "title": "Vi er kun lige begyndt",
+      "body": "Drømmen er stadig den samme: **Friskristet specialkaffe til priser, hvor alle kan være med.**\n\nOg jo flere der støtter op om Ristet Aalborg, desto bedre muligheder får vi for at købe smartere, riste mere effektivt og på sigt sænke priserne yderligere.\n\nDer er allerede nye og lidt anderledes kaffeidéer på tegnebrættet.\n\n**Det her er kun begyndelsen – og du kan være med fra starten.**",
+      "images": [],
+      "sortOrder": 10,
+      "isFuture": true
+    }
+  ]
+}

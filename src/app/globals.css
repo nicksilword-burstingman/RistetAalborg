@@ -246,7 +246,7 @@
 }
 .founder-visual {
   position: relative;
-  background: #e9dfd1;
+  background: var(--cream);
   padding: 25px;
 }
 .founder-visual > img {
@@ -272,7 +272,7 @@
   font-family: Georgia, serif;
   line-height: 1.2;
   font-size: 24px;
-  background: #f5f1e8;
+  background: var(--cream);
   border: 1px solid var(--ink);
   transform: rotate(7deg);
 }
@@ -693,14 +693,14 @@
   }
 }
 @theme inline {
-  --color-cream: #f5f1e8;
+  --color-cream: #ffffff;
   --color-espresso: #33251e;
   --color-olive: #777b61;
   --font-sans: Arial, Helvetica, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
 }
 :root {
-  --cream: #f5f1e8;
+  --cream: #ffffff;
   --ink: #33251e;
   --olive: #777b61;
   --sand: #d4c4aa;
@@ -1139,8 +1139,28 @@ select:focus-visible {
   transform: rotate(-5deg);
   transition: transform 0.4s;
 }
-.product-card:hover .coffee-bag {
-  transform: rotate(-2deg) translateY(-7px);
+.product-card .bag-scene,
+.detail-image .bag-scene {
+  transition: transform 350ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  transform-origin: center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .bag-scene,
+  .detail-image:hover .bag-scene {
+    transform: scale(1.06);
+  }
+}
+.product-card:focus-visible .bag-scene,
+.product-card:active .bag-scene,
+.detail-image:active .bag-scene {
+  transform: scale(1.06);
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-card .bag-scene,
+  .detail-image .bag-scene {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 .bag-seal {
   height: 12px;
@@ -1246,7 +1266,7 @@ select:focus-visible {
   line-height: 1.7;
 }
 .philosophy {
-  background: #e9e4d8;
+  background: var(--cream);
   padding: 72px 12%;
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -1352,7 +1372,7 @@ select:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #eae0d0;
+  background: var(--cream);
   min-height: 350px;
   padding: 25px;
 }
@@ -1369,7 +1389,7 @@ select:focus-visible {
 .newsletter {
   text-align: center;
   padding: 65px 20px;
-  background: #e8e3d8;
+  background: var(--cream);
 }
 .newsletter h2 {
   font-size: 40px;

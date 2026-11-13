@@ -4,6 +4,9 @@ These photographs illustrate coffee cultivation and harvesting. They do not show
 
 ## Owner-supplied photographs
 
+- `timeline/asien.webp`, `timeline/medicinstudiet.webp`, `timeline/boennejagt.webp`, `timeline/rister-reparation.webp`, `timeline/samuel-og-kaffe.webp`, `timeline/webshop-arbejde.webp`: personal photographs supplied by the owner for the named timeline chapters. Automatically oriented, resized and converted to WebP; metadata removed. No identity edits or generated imagery. Focus and cropping may be changed by the owner.
+- `timeline/guatemala-design.webp`: the owner's supplied Guatemala Antigua label artwork for the September 2026 design chapter, converted to WebP and shown in full. Its printed product claims are not automatically copied into the product catalog.
+
 - `founder-portrait.jpg` and `founder-at-work.jpg`: supplied by the owner for the About page. Original photographs; displayed with responsive cropping.
 - `coffee-plantation-reference.png`: plantation reference supplied by the owner, currently displayed unchanged except for responsive cropping. No identity replacement or AI generation has been performed. It is not evidence of a founder visit or supplier relationship. Confirm original photographer and reuse permissions before public launch.
 
