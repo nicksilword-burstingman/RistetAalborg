@@ -2,9 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { supportCampaign, supportPrice } from "@/lib/support";
-import Image from "next/image";
 import { Product, formatPrice } from "@/lib/catalog";
-import { CoffeeBag } from "./product-card";
+import { CoffeeLabel } from "./product-card";
 export function ProductDetail({
   product: p,
   support = false,
@@ -13,36 +12,17 @@ export function ProductDetail({
   support?: boolean;
 }) {
   const [grams, setGrams] = useState(250);
-  const [label, setLabel] = useState(false);
   const variant = p.variants.find((v) => v.grams === grams)!;
   return (
     <div className="product-detail">
       <div>
         <div className={`detail-image ${p.color}`}>
-          {label ? (
-            <Image
-              src="/images/guatemala-label.png"
-              alt="Guatemala-etiketten i fuld størrelse"
-              width={480}
-              height={720}
-              className="full-label"
-            />
-          ) : (
-            <CoffeeBag product={p} large />
-          )}
+          <CoffeeLabel product={p} large />
         </div>
-        {p.id === "guatemala" && (
-          <div className="gallery-controls">
-            <button aria-pressed={!label} onClick={() => setLabel(false)}>
-              Poseillustration
-            </button>
-            <button aria-pressed={label} onClick={() => setLabel(true)}>
-              Original etikette
-            </button>
-          </div>
-        )}
         <p className="draft-note">
-          Poseillustration · Endelig emballage kan afvige.
+          <a href={p.label.src} target="_blank" rel="noreferrer">
+            Se etiketten i fuld størrelse ↗
+          </a>
         </p>
       </div>
       <div className="detail-copy">

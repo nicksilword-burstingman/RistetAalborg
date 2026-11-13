@@ -145,11 +145,11 @@
       "images": [
         {
           "id": "00000000-0000-4000-8000-000000000006",
-          "src": "/images/timeline/guatemala-design.webp",
-          "alt": "Det farverige Guatemala Antigua-labeldesign til Ristet Aalborg med vulkaner og en tukan.",
+          "src": "/images/timeline/guatemala-design-2026.webp",
+          "alt": "Ristet Aalborgs etiket til Guatemala Antigua",
           "caption": "En bønne med sin helt egen personlighed.",
-          "width": 1024,
-          "height": 1536,
+          "width": 1086,
+          "height": 1448,
           "focusX": 50,
           "focusY": 50,
           "crop": "contain",

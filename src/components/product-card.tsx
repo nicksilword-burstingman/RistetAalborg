@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Product, formatPrice } from "@/lib/catalog";
 import { supportCampaign, supportPrice } from "@/lib/support";
 
-export function CoffeeBag({
+export function CoffeeLabel({
   product,
   large = false,
 }: {
@@ -12,35 +12,16 @@ export function CoffeeBag({
   large?: boolean;
 }) {
   return (
-    <div className={`bag-scene ${product.color} ${large ? "large" : ""}`}>
-      <div className="coffee-bag">
-        <div className="bag-seal" />
-        <div className="bag-label">
-          {product.id === "guatemala" ? (
-            <Image
-              src="/images/guatemala-label.png"
-              alt="Ristet Aalborgs originale Guatemala-etikette"
-              width={240}
-              height={360}
-            />
-          ) : (
-            <div className={`simple-label ${product.color}`}>
-              <span>
-                RISTET
-                <br />
-                AALBORG
-              </span>
-              <small>KAFFE MED KÆRLIGHED</small>
-              <div className="label-sun">✳</div>
-              <strong>{product.country.toUpperCase()}</strong>
-              <small>{product.region ?? "SELECTION"}</small>
-              <div className="label-rule" />
-              <small>FRISKRISTET SPECIALKAFFE</small>
-            </div>
-          )}
-        </div>
-        <span className="bag-weight">RISTET I AALBORG · 250 G</span>
-      </div>
+    <div className={`bag-scene ${large ? "large" : ""}`}>
+      <Image
+        {...product.label}
+        className="coffee-label-artwork"
+        sizes={
+          large
+            ? "(max-width: 760px) 78vw, 420px"
+            : "(max-width: 760px) 74vw, (max-width: 1050px) 25vw, 300px"
+        }
+      />
     </div>
   );
 }
@@ -58,7 +39,7 @@ export function ProductCard({
     >
       <div className={`product-visual ${product.color}`}>
         <span className="product-tag">{product.methods.join(" / ")}</span>
-        <CoffeeBag product={product} />
+        <CoffeeLabel product={product} />
         <span className="product-arrow">
           <ArrowUpRight size={21} />
         </span>

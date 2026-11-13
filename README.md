@@ -41,7 +41,7 @@ Brug “Eksportér historien” til en JSON-kopi af teksten og billedreferencern
 - Homepage: `src/app/page.tsx`. Brand colors, responsive styling and typography: `src/app/globals.css`.
 - Brewing content: `src/lib/guides.ts`.
 - Information drafts: `src/app/information/[slug]/page.tsx`.
-- Original supplied assets: `public/images/logo.png` and `public/images/guatemala-label.png`.
+- Owner-supplied logo: `public/images/logo.png`. Current product labels: `public/images/labels/{guatemala,brazil,ethiopia}-2026.webp`, shown in full on the homepage, product cards and detail pages.
 
 The timeline can be edited without source changes through `/admin`. Other content and product management still require Phase 2. The original Guatemala label is displayed as supplied artwork; its printed tasting notes are not treated as verified catalog facts. The other labels and all bag representations are illustrative, not photographs of actual packaging.
 

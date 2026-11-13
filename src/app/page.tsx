@@ -52,11 +52,9 @@ export default function Home() {
             </div>
             <div className="cover-label">
               <Image
-                src="/images/guatemala-label.png"
-                alt="Vores originale Guatemala Antigua-etikette"
-                width={240}
-                height={360}
-                priority
+                {...products[0].label}
+                sizes="(max-width: 760px) 175px, (max-width: 1000px) 180px, 280px"
+                preload
               />
             </div>
             <div className="cover-price">

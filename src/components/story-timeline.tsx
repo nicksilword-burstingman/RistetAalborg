@@ -78,9 +78,9 @@ export function StoryTimeline({ chapters }: { chapters: TimelineChapter[] }) {
             <span>BARE EN IDÉ, DER BLEV VED</span>
           </div>
           <p className="eyebrow">SMÅ SKRIDT. EN HEL DEL KAFFE.</p>
-          <h2 id="journey-title">
+          <h1 id="journey-title">
             VORES <em>REJSE</em>
-          </h2>
+          </h1>
           <p className="journey-intro">
             Fra en spontan idé på den anden side af jorden til friskristet
             specialkaffe i hjertet af Aalborg.

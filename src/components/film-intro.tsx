@@ -106,25 +106,6 @@ export function FilmIntro() {
           </div>
         </div>
       </section>
-      <p className="film-source">
-        Illustrativ kaffefilm:{" "}
-        <a
-          href="https://commons.wikimedia.org/wiki/File:Sunday_Morning_Espresso_Routine_-_Grind_%2B_distribute_%2B_tamp_%2B_extraction_(15-Second_Abridged_Version).webm"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Scott Schiller
-        </a>{" "}
-        ·{" "}
-        <a
-          href="https://creativecommons.org/licenses/by/2.0/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          CC BY 2.0
-        </a>{" "}
-        · vist uden lyd og beskåret til skærmen.
-      </p>
     </>
   );
 }
