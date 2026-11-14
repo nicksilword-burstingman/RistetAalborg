@@ -13,6 +13,7 @@
     "admin:setup": "tsx scripts/setup-admin.ts",
     "data:backup": "tsx scripts/backup-content.ts",
     "test": "tsx --test tests/*.test.ts",
+    "test:checkout-http": "tsx scripts/check-checkout-http.ts",
     "format": "prettier --write src tests scripts content *.json *.ts *.mjs README.md",
     "format:check": "prettier --check src tests scripts content *.json *.ts *.mjs README.md"
   },
@@ -23,6 +24,7 @@
     "react-dom": "^19.2.0",
     "server-only": "^0.0.1",
     "sharp": "^0.35.5",
+    "stripe": "^23.1.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {

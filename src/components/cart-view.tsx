@@ -106,7 +106,7 @@ export function CartView() {
           )}
           <div>
             <dt>Fragt</dt>
-            <dd>Oplyses ved salgsstart</dd>
+            <dd>Beregnes i kassen</dd>
           </div>
           <div className="cart-total">
             <dt>I alt inkl. moms</dt>
@@ -118,11 +118,10 @@ export function CartView() {
           {formatWeight(quote.totalGrams)} hele bønner
         </p>
         <div className="cart-checkout-note">
-          <strong>Vi gør klar til den første bestilling.</strong>
-          <p>
-            Du kan gemme og tilpasse din kurv. Betaling og bestilling åbner, når
-            webshoppen er klar.
-          </p>
+          <Link href="/kasse" className="button dark">
+            Gå til kassen <ArrowUpRight size={18} />
+          </Link>
+          <p>Vælg levering og gennemgå din bestilling i kassen.</p>
         </div>
         <p className="cart-pricing-explanation">
           Mængdepris beregnes automatisk for samme kaffe og ristning. Vi pakker

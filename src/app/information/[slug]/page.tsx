@@ -7,7 +7,7 @@ const pages: Record<string, { title: string; paragraphs: string[] }> = {
       "Kan jeg bestille kaffe nu? Ikke endnu. Webshoppen er under opbygning, og sortimentet vises som produktkladder med eksempelpriser.",
       "Hvor ristes kaffen? Ristet Aalborg er et uafhængigt mikroristeri i Aalborg.",
       "Er priserne inkl. moms? Ja, de viste eksempelpriser er inkl. moms. Fragt og leveringsvilkår fastlægges inden salgsstart.",
-      "Kan jeg få formalet kaffe? Produktsiderne viser de planlagte valgmuligheder. Det endelige udvalg bekræftes inden åbning.",
+      "Kan jeg få formalet kaffe? Vi tilbyder kun hele bønner lige nu.",
     ],
   },
   levering: {
@@ -35,15 +35,15 @@ const pages: Record<string, { title: string; paragraphs: string[] }> = {
     title: "Privatlivspolitik",
     paragraphs: [
       "Kladde — den endelige privatlivspolitik offentliggøres inden lancering.",
-      "Denne forhåndsvisning har ingen kontooprettelse, betaling, nyhedsbrevstilmelding eller analyseværktøjer. Serverdriften kan behandle tekniske adgangsoplysninger.",
+      "Kassen understøtter kontaktoplysninger, leveringsadresse og betaling hos Stripe, når forbindelsen er konfigureret. Ved et betalingsforsøg gemmes bestillingen og de nødvendige kontakt- og leveringsoplysninger. Testtilstand er tydeligt markeret. Indtast kun testoplysninger ved testkøb.",
       "Dataansvarlig, formål, retsgrundlag, databehandlere, opbevaringsperioder og dine rettigheder skal dokumenteres ud fra den faktiske produktionsopsætning.",
     ],
   },
   cookies: {
     title: "Cookieindstillinger",
     paragraphs: [
-      "Denne forhåndsvisning sætter ingen analyse- eller marketingcookies og indlæser ingen sociale medieindhold fra tredjeparter. Der er derfor ingen valgfrie cookies at slå til eller fra.",
-      "Inden betaling, login eller analyseværktøjer tilføjes, opdateres cookieoplysningerne og eventuelle samtykkevalg.",
+      "Webshoppen sætter ingen analyse- eller marketingcookies. Kurven gemmes lokalt i din browser. Kassen bruger en nødvendig cookie til at knytte din bestilling til din browser og beskytte adgangen til ordreoplysninger. Cookien udløber efter 30 dage. Administrationen bruger en separat login-cookie med op til otte timers levetid.",
+      "Betaling foregår hos Stripe, når betalingsforbindelsen er konfigureret. Den endelige information om databehandlere og opbevaring færdiggøres før salgsstart.",
     ],
   },
 };

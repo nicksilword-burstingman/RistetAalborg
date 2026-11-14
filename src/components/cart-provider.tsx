@@ -25,6 +25,7 @@ type CartContextValue = {
   addItem: (item: CartItem) => void;
   updateQuantity: (key: string, quantity: number) => void;
   removeItem: (key: string) => void;
+  consumeOrder: (orderId: string, purchased: CartItem[]) => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -89,6 +90,37 @@ export function CartProvider({ children }: { children: ReactNode }) {
           persist(
             currentItems.current.filter((item) => cartItemKey(item) !== key),
           ),
+        consumeOrder: (orderId, purchased) => {
+          // Only called after the private order endpoint confirms a verified payment.
+          // Keep additions made since checkout, and do not consume a receipt twice.
+          try {
+            const receiptKey = "ristet-consumed-orders-v1";
+            const raw: unknown = JSON.parse(
+              window.localStorage.getItem(receiptKey) || "[]",
+            );
+            const receipts = Array.isArray(raw)
+              ? raw.filter((id): id is string => typeof id === "string")
+              : [];
+            if (receipts.includes(orderId)) return;
+            window.localStorage.setItem(
+              receiptKey,
+              JSON.stringify([...receipts.slice(-99), orderId]),
+            );
+            persist(
+              currentItems.current.flatMap((item) => {
+                const bought = purchased
+                  .filter((p) => cartItemKey(p) === cartItemKey(item))
+                  .reduce((sum, p) => sum + p.quantity, 0);
+                const quantity = Math.max(0, item.quantity - bought);
+                return quantity ? [{ ...item, quantity }] : [];
+              }),
+            );
+          } catch {
+            setStorageError(
+              "Din betaling er bekræftet, men kurven kunne ikke opdateres i denne browser. Du kan selv fjerne de købte poser.",
+            );
+          }
+        },
       }}
     >
       {children}

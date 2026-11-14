@@ -51,5 +51,34 @@ export function initializeDatabase(db: DatabaseSync) {
     CREATE TABLE IF NOT EXISTS login_attempts (
       id INTEGER PRIMARY KEY, attempted_at INTEGER NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS checkout_settings (
+      id INTEGER PRIMARY KEY CHECK(id = 1), document TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS commerce_orders (
+      id TEXT PRIMARY KEY, number TEXT NOT NULL UNIQUE,
+      owner_hash TEXT NOT NULL, request_id TEXT NOT NULL, payload_hash TEXT NOT NULL,
+      mode TEXT NOT NULL CHECK(mode IN ('test','live')),
+      mobilepay INTEGER NOT NULL DEFAULT 0,
+      status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','paid','expired')),
+      customer TEXT NOT NULL, quote TEXT NOT NULL, site_url TEXT NOT NULL,
+      terms_version TEXT NOT NULL, created_at INTEGER NOT NULL, paid_at INTEGER,
+      stripe_session_id TEXT UNIQUE, stripe_checkout_url TEXT,
+      payment_intent_id TEXT UNIQUE, refunded_ore INTEGER NOT NULL DEFAULT 0,
+      fulfillment TEXT NOT NULL DEFAULT 'unfulfilled' CHECK(fulfillment IN ('unfulfilled','shipped')),
+      UNIQUE(owner_hash, request_id)
+    );
+    CREATE INDEX IF NOT EXISTS commerce_orders_created ON commerce_orders(created_at);
+    CREATE TABLE IF NOT EXISTS payment_events (
+      id TEXT PRIMARY KEY, order_id TEXT NOT NULL REFERENCES commerce_orders(id),
+      type TEXT NOT NULL, created_at INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS commerce_outbox (
+      id TEXT PRIMARY KEY, order_id TEXT NOT NULL REFERENCES commerce_orders(id),
+      kind TEXT NOT NULL, created_at INTEGER NOT NULL,
+      processed_at INTEGER, attempts INTEGER NOT NULL DEFAULT 0
+    );
+    CREATE TABLE IF NOT EXISTS checkout_attempts (
+      id INTEGER PRIMARY KEY, owner_hash TEXT NOT NULL, attempted_at INTEGER NOT NULL
+    );
   `);
 }
