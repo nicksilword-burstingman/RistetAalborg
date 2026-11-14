@@ -1,21 +1,17 @@
-import Link from "next/link";
-export const metadata = { title: "Din kurv" };
+import { CartView } from "@/components/cart-view";
+import "../shop/product.css";
+export const metadata = {
+  title: "Din kurv",
+  robots: { index: false, follow: false },
+};
 export default function Page() {
   return (
-    <section className="section reading-page">
+    <section className="section cart-page">
       <p className="eyebrow">DIN KURV</p>
       <h1>
-        Der er plads til
-        <br />
-        <em>god kaffe.</em>
+        Din næste <em>gode kop.</em>
       </h1>
-      <p>
-        Din kurv er tom. Sortimentet er i forhåndsvisning, og køb bliver
-        tilgængeligt, når webshoppen åbner.
-      </p>
-      <Link href="/shop" className="button dark">
-        Se vores kommende kaffe →
-      </Link>
+      <CartView />
     </section>
   );
 }

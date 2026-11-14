@@ -1,115 +1,199 @@
 "use client";
-import { useState } from "react";
+
+import Image from "next/image";
 import Link from "next/link";
-import { supportCampaign, supportPrice } from "@/lib/support";
-import { Product, formatPrice } from "@/lib/catalog";
-import { CoffeeLabel } from "./product-card";
+import { useState } from "react";
+import { ArrowDown, ArrowUpRight, Check, ShoppingBag } from "lucide-react";
+import {
+  formatPrice,
+  formatWeight,
+  products,
+  type Product,
+} from "@/lib/catalog";
+import { quoteSelection } from "@/lib/pricing";
+import { supportCampaign } from "@/lib/support";
+import { useCart } from "./cart-provider";
+import { QuantitySelector } from "./quantity-selector";
+
 export function ProductDetail({
-  product: p,
+  product,
   support = false,
 }: {
   product: Product;
   support?: boolean;
 }) {
   const [grams, setGrams] = useState(250);
-  const variant = p.variants.find((v) => v.grams === grams)!;
+  const [quantity, setQuantity] = useState(1);
+  const [message, setMessage] = useState("");
+  const [added, setAdded] = useState(false);
+  const cart = useCart();
+  const quote = quoteSelection(product, grams, quantity, support);
+  const basePath = support ? "stoet" : "shop";
+  const editions = products.filter(
+    (entry) => entry.coffeeId === product.coffeeId,
+  );
+  const addToCart = () => {
+    try {
+      cart.addItem({ productId: product.id, grams, quantity, support });
+      setAdded(true);
+      setMessage(
+        `${quantity} ${quantity === 1 ? "pose" : "poser"} à ${formatWeight(grams)} er lagt i kurven.`,
+      );
+    } catch (error) {
+      setAdded(false);
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Kaffen kunne ikke lægges i kurven. Prøv igen.",
+      );
+    }
+  };
+
   return (
-    <div className="product-detail">
-      <div>
-        <div className={`detail-image ${p.color}`}>
-          <CoffeeLabel product={p} large />
+    <section className="coffee-product-hero" aria-labelledby="coffee-title">
+      <nav className="coffee-breadcrumbs" aria-label="Brødkrumme">
+        <Link href="/">Forside</Link>
+        <span aria-hidden="true">/</span>
+        <Link href={`/${basePath}`}>{support ? "Støt" : "Shop"}</Link>
+        <span aria-hidden="true">/</span>
+        <span>
+          {product.name} · {product.method}
+        </span>
+      </nav>
+      <div className="coffee-hero-grid">
+        <div className="coffee-hero-heading">
+          <span className="coffee-roast-badge">{product.method}ristet</span>
+          <h1 id="coffee-title">{product.name}</h1>
+          <span className="coffee-hero-origin">
+            {product.country} · 100 % Arabica
+          </span>
         </div>
-        <p className="draft-note">
-          <a href={p.label.src} target="_blank" rel="noreferrer">
-            Se etiketten i fuld størrelse ↗
+        <figure className="coffee-hero-figure">
+          <Image
+            {...product.image}
+            sizes="(max-width: 760px) 88vw, (max-width: 1100px) 46vw, 36vw"
+            preload
+            className="coffee-hero-image"
+          />
+        </figure>
+        <div className="coffee-hero-intro">
+          <p>{product.summary}</p>
+          <a href="#om-kaffen" className="coffee-read-more">
+            Lær kaffen at kende <ArrowDown size={15} aria-hidden="true" />
           </a>
-        </p>
-      </div>
-      <div className="detail-copy">
-        <p className="eyebrow">
-          {p.country} / {p.methods.join(" & ")}
-        </p>
-        <h1>{p.name}</h1>
-        <p>{p.description}</p>
-        <p className="detail-price" aria-live="polite">
-          {formatPrice(
-            support ? supportPrice(variant.priceOre) : variant.priceOre,
-          )}{" "}
-          <small>inkl. moms · eksempelpris</small>
-        </p>
-        {support ? (
-          <div className="support-breakdown" aria-live="polite">
-            <p className="eyebrow">KAFFE MED OMTANKE</p>
-            <dl className="product-facts">
-              <div>
-                <dt>Kaffens normale pris</dt>
-                <dd>{formatPrice(variant.priceOre)}</dd>
-              </div>
-              <div>
-                <dt>Ekstra støtte pr. pose</dt>
-                <dd>{formatPrice(supportCampaign.contributionOre)}</dd>
-              </div>
-              <div>
-                <dt>Samlet eksempelpris</dt>
-                <dd>{formatPrice(supportPrice(variant.priceOre))}</dd>
-              </div>
-            </dl>
-            <p>
-              De ekstra 20 kr. er tiltænkt et støtteformål. Modtager og vilkår
-              er endnu ikke fastlagt. Der indsamles ingen penge nu.
-            </p>
-            <Link className="text-link" href={"/shop/" + p.slug}>
-              Se kaffen uden støtte →
-            </Link>
-          </div>
-        ) : (
-          <Link className="text-link" href={"/stoet/" + p.slug}>
-            Vælg samme kaffe med 20 kr. i støtte →
-          </Link>
-        )}
-        <fieldset>
-          <legend>Vælg posestørrelse</legend>
-          <div className="choice-row">
-            {p.variants.map((v) => (
-              <button
-                key={v.sku}
-                aria-pressed={grams === v.grams}
-                onClick={() => setGrams(v.grams)}
-              >
-                {v.grams === 1000 ? "1 kg" : `${v.grams} g`}
-              </button>
-            ))}
-          </div>
-        </fieldset>
-        <label className="field-label">
-          Bønner eller formalet
-          <select>
-            <option>Hele bønner</option>
-            <option>Formalet til filter</option>
-            <option>Formalet til stempelkande</option>
-            <option>Formalet til espresso</option>
-          </select>
-        </label>
-        <div className="notice">
-          Produktkladde · Ikke til salg endnu. Pris og formalingsmuligheder er
-          eksempler.
         </div>
-        <dl className="product-facts">
-          {[
-            ["Oprindelse", p.country],
-            ["Region", p.region],
-            ["Væksthøjde", p.altitude],
-            ["Proces", p.process],
-            ["Ristning", p.roast],
-            ["Smagsnoter", "Offentliggøres inden salgsstart"],
-          ].map(([k, v]) => (
-            <div key={k}>
-              <dt>{k}</dt>
-              <dd>{v ?? "Afventer bekræftelse"}</dd>
+        <div className="coffee-purchase">
+          <nav className="coffee-editions" aria-label="Vælg ristning">
+            {editions.map((edition) => (
+              <Link
+                href={`/${basePath}/${edition.slug}`}
+                key={edition.id}
+                aria-current={edition.id === product.id ? "page" : undefined}
+              >
+                {edition.method}
+              </Link>
+            ))}
+          </nav>
+          <fieldset className="coffee-bag-options">
+            <legend>Vælg posestørrelse</legend>
+            <div className="choice-row">
+              {product.variants.map((variant) => (
+                <button
+                  type="button"
+                  key={variant.sku}
+                  aria-pressed={grams === variant.grams}
+                  onClick={() => {
+                    setGrams(variant.grams);
+                    setAdded(false);
+                    setMessage("");
+                  }}
+                >
+                  <strong>{formatWeight(variant.grams)}</strong>
+                  <span>
+                    {formatPrice(
+                      variant.priceOre +
+                        (support ? supportCampaign.contributionOre : 0),
+                    )}
+                  </span>
+                </button>
+              ))}
             </div>
-          ))}
-        </dl>
+          </fieldset>
+          <div className="coffee-purchase-quantity">
+            <QuantitySelector
+              value={quantity}
+              onChange={(next) => {
+                setQuantity(next);
+                setAdded(false);
+                setMessage("");
+              }}
+            />
+            <span className="coffee-whole-beans">Kun hele bønner</span>
+          </div>
+          <div
+            className="coffee-purchase-price"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <span>{formatWeight(quote.totalGrams)} i alt</span>
+            <strong>{formatPrice(quote.totalOre)}</strong>
+          </div>
+          {quote.discountOre > 0 && (
+            <p className="coffee-quantity-saving">
+              Mængdepris · Du sparer {formatPrice(quote.discountOre)}
+            </p>
+          )}
+          <button
+            type="button"
+            className="coffee-add-button"
+            onClick={addToCart}
+            disabled={!cart.ready}
+          >
+            {added ? <Check size={18} /> : <ShoppingBag size={18} />}
+            {added ? "Læg flere i kurven" : "Læg i kurv"}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </button>
+          <div
+            className="coffee-cart-feedback"
+            role="status"
+            aria-live="polite"
+          >
+            {message}
+            {added && (
+              <>
+                {" "}
+                <Link href="/kurv">Se kurven →</Link>
+              </>
+            )}
+          </div>
+          <p className="coffee-price-note">
+            Inkl. moms · Friskristet på bestilling
+          </p>
+          <p className="coffee-volume-note">
+            Samme kaffe og ristning får automatisk mængdepris. Fx 2 × 500 g til
+            1 kg-prisen.
+          </p>
+          {support && (
+            <p className="coffee-support-note">
+              Heraf {formatPrice(quote.supportOre)} til et kommende
+              støtteformål. Modtager og vilkår offentliggøres inden salgsstart.
+            </p>
+          )}
+          <Link
+            className="coffee-support-link"
+            href={`/${support ? "shop" : "stoet"}/${product.slug}`}
+          >
+            {support
+              ? "Se kaffen uden støtte"
+              : "Vælg kaffen med 20 kr. i støtte pr. pose"}{" "}
+            <ArrowUpRight size={13} />
+          </Link>
+          <p className="coffee-preview-note">
+            Forhåndsvisning · Du kan gemme din kurv. Betaling åbner senere.
+          </p>
+          {cart.storageError && <p role="alert">{cart.storageError}</p>}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

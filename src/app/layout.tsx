@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { CartProvider } from "@/components/cart-provider";
 import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -29,9 +30,11 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Spring til indhold
         </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

@@ -1,7 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/catalog";
-import { ProductDetail } from "@/components/product-detail";
+import { CoffeeProductPage } from "@/components/coffee-product-page";
+import { productMetadata } from "@/lib/product-seo";
+import "../../shop/product.css";
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
@@ -12,10 +13,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const p = products.find((p) => p.slug === slug);
-  return {
-    title: p ? `${p.name} — med støtte` : "Kaffe ikke fundet",
-    description: p?.description,
-  };
+  return p ? productMetadata(p, true) : { title: "Kaffe ikke fundet" };
 }
 export default async function ProductPage({
   params,
@@ -25,13 +23,5 @@ export default async function ProductPage({
   const { slug } = await params;
   const p = products.find((p) => p.slug === slug);
   if (!p) notFound();
-  return (
-    <section className="section">
-      <nav className="breadcrumbs" aria-label="Brødkrumme">
-        <Link href="/">Forside</Link> / <Link href="/stoet">Støt</Link> /{" "}
-        <span>{p.name}</span>
-      </nav>
-      <ProductDetail product={p} support />
-    </section>
-  );
+  return <CoffeeProductPage product={p} support />;
 }

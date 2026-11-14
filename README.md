@@ -4,7 +4,7 @@ The storefront has a white page background, an editorial homepage with a video o
 
 The homepage uses an editorial masthead, documentary cultivation/harvest imagery, a personal founder story and a prominent support section. Founder copy reflects the owner's description of studying medicine and wanting to help others. It makes no medical claims or claims about competitors. Documentary images are explicitly illustrative, not supplier evidence or Fairtrade certification. Sources, authors and reuse licenses are recorded in `public/images/ATTRIBUTION.md` and credited on the page. Replace illustrative images with documented supplier photography when available.
 
-Phase 1: Danish storefront built with Next.js App Router, React, TypeScript, Tailwind CSS and Zod. Includes a responsive editorial homepage, accessible navigation, filterable catalog, three draft product pages, brewing guides, subscription configuration preview and clearly marked information drafts.
+Danish storefront built with Next.js App Router, React, TypeScript, Tailwind CSS and Zod. Includes a responsive editorial homepage, accessible navigation, six draft coffee editions (three coffees, each for espresso and filter), brewing guides, subscription configuration preview and clearly marked information drafts.
 
 ## Run locally
 
@@ -41,13 +41,25 @@ Brug “Eksportér historien” til en JSON-kopi af teksten og billedreferencern
 - Homepage: `src/app/page.tsx`. Brand colors, responsive styling and typography: `src/app/globals.css`.
 - Brewing content: `src/lib/guides.ts`.
 - Information drafts: `src/app/information/[slug]/page.tsx`.
-- Owner-supplied logo: `public/images/logo.png`. Current product labels: `public/images/labels/{guatemala,brazil,ethiopia}-2026.webp`, shown in full on the homepage, product cards and detail pages.
+- Owner-supplied logo: `public/images/logo.png`. Standalone labels in `public/images/labels/` remain in the homepage cover and September story chapter. Product cards and detail pages use the supplied coffee bags in `public/images/products/`, with a transparent background, retained ground shadow, marked roast circles and espresso/filter checkbox. The unmarked `*-base.webp` assets are retained for future edits.
 
-The timeline can be edited without source changes through `/admin`. Other content and product management still require Phase 2. The original Guatemala label is displayed as supplied artwork; its printed tasting notes are not treated as verified catalog facts. The other labels and all bag representations are illustrative, not photographs of actual packaging.
+The timeline can be edited without source changes through `/admin`. Other content and product management still require Phase 2. Product descriptions, tasting notes, producer details and organic claims now come from the owner's supplied copy and artwork. Ethiopian altitude is 1,900–2,300 m in both editions, confirmed by the owner. The supplied bag artwork is a packaging visualization; no roast date or bag weight is invented on its blank fields.
+
+## Produktsider og mængdepriser
+
+Produktsiderne består af en farvet top med pose og produktvalg, beskrivelse og fakta, en oprindelsessektion med ejerleverede billeder og en sektion med andre kaffer. Espresso/filter har egne adresser, produkt-ID’er og SKU’er; de tre oprindelige produktadresser bevares. Alle produkter er fortsat kladder. Kun hele bønner kan vælges.
+
+Poserne koster 80 kr. / 250 g, 150 kr. / 500 g, 280 kr. / 1 kg og 780 kr. / 3 kg. `src/lib/pricing.ts` beregner den laveste kombination af disse præcise vægttrin for den samlede vægt af samme kaffe og ristning. Fx koster 2 × 500 g 280 kr., 3 × 1 kg 780 kr. og 3 × 500 g 430 kr. Den fysiske pakning ændres ikke. Støtte på 20 kr. beregnes pr. faktisk pose efter kafferabatten; støtte- og almindelige køb grupperes hver for sig.
+
+Kurven gemmer produkt-ID, posestørrelse, antal og støttevalg i browserens localStorage. Genindlæsning og ændringer i andre faner synkroniseres. Priser gemmes ikke i kurven; de genberegnes ud fra kataloget. Forskellige posestørrelser af samme kaffe og ristning får samlet mængdepris i kurven. Kurven kan tilpasses og tømmes, men har ingen ordre- eller betalingsfunktion. En fremtidig checkout skal validere de samme valg og genberegne alle priser og lagerstatus på serveren; browserens beløb må aldrig bruges direkte til betaling eller bogføring.
+
+`src/lib/coffee-origins.ts` indeholder de tre oprindelseshistorier og billedbeskrivelser. Billedrækken kan sættes på pause, pauser ved fokus/hover og uden for viewporten og bliver en manuelt scrollende række ved reduceret bevægelse. `scripts/prepare-coffee-assets.mjs <attachment-directory>` kan genskabe de optimerede billeder fra de oprindelige ejerleverede vedhæftninger. Billederne ændres deterministisk med Sharp; der bruges ingen billedgenerering.
+
+Hver kaffeudgave har egen kort metabeskrivelse, canonical, Open Graph/Twitter-billede og serverrenderet Product- og BreadcrumbList-JSON-LD. Ingen tilbud, lagerstatus eller bedømmelser opfindes. Sitemap medtager alle udgaver. Den eksisterende blokering af indeksering beholdes, indtil butikken og dens juridiske oplysninger er klar til offentlig lancering.
 
 ## Deliberate release boundaries
 
-This is **not ready to accept orders**. The backend currently covers only timeline storage, an owner login, image uploads and story editing. There is no product/order administration, customer authentication, cart persistence, payment, email subscription or Saldi connection. Account/cart routes explain availability rather than pretending to perform actions. The subscription selector changes a local preview only; 279 DKK is an example for 1 kg. Prices for other subscription weights remain unspecified.
+This is **not ready to accept orders**. The backend currently covers timeline storage, an owner login, image uploads and story editing. The local browser cart supports bag selection, quantities, persistence and quantity prices. There is no product/order administration, customer authentication, server-side cart, payment, email subscription or Saldi connection. The account route explains availability. The subscription selector changes a local preview only; 279 DKK is an example for 1 kg. Prices for other subscription weights remain unspecified.
 
 Search engine indexing is disabled through robots and metadata while draft products and legal content are public. Enable indexing only after publication rules, real business details and legal review are completed. Product Offer JSON-LD is intentionally deferred until real published offers exist; no invented inventory or purchasable offer is emitted.
 

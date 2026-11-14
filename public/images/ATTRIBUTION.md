@@ -4,6 +4,9 @@ These photographs illustrate coffee cultivation and harvesting. They do not show
 
 ## Owner-supplied photographs
 
+- `products/{guatemala,ethiopia,brazil}-{espresso,filter}.webp`: bag artwork supplied by the owner. Background removed with a connected-pixel mask; the original ground shadow is retained. Six deterministic variants mark the requested roast circles and the relevant espresso/filter checkbox. Unmarked transparent bases are retained as `products/*-base.webp`. Standalone labels on the homepage cover and personal timeline are unchanged by this update.
+- `origins/guatemala-*.webp`, `origins/ethiopia-*.webp`, `origins/brazil-*.webp`: eight origin/farm photographs supplied and assigned to coffee origins by the owner. Resized without enlargement, metadata stripped, converted to WebP and displayed with responsive cropping. No people are replaced or identified from their appearance. The Guatemala coffee is a regional selection and is not attributed to a specific photographed farm or person.
+
 - `labels/guatemala-2026.webp`, `labels/brazil-2026.webp`, `labels/ethiopia-2026.webp`: updated label artwork supplied by the owner, converted in full to WebP with metadata removed. Printed product claims are not automatically copied into catalog fields.
 
 - `timeline/asien.webp`, `timeline/medicinstudiet.webp`, `timeline/boennejagt.webp`, `timeline/rister-reparation.webp`, `timeline/samuel-og-kaffe.webp`, `timeline/webshop-arbejde.webp`: personal photographs supplied by the owner for the named timeline chapters. Automatically oriented, resized and converted to WebP; metadata removed. No identity edits or generated imagery. Focus and cropping may be changed by the owner.

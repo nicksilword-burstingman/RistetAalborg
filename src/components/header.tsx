@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, UserRound, ShoppingBag, ArrowUpRight } from "lucide-react";
+import { useCart } from "./cart-provider";
 const links = [
   ["/shop", "Shop"],
   ["/stoet", "Støt"],
@@ -14,6 +15,7 @@ const links = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const path = usePathname();
+  const { quantity } = useCart();
   return (
     <>
       <div className="announcement">
@@ -50,10 +52,10 @@ export function Header() {
           <Link
             href="/kurv"
             className="cart-link"
-            aria-label="Indkøbskurv, 0 varer"
+            aria-label={`Indkøbskurv, ${quantity} ${quantity === 1 ? "pose" : "poser"}`}
           >
             <ShoppingBag size={20} />
-            <span>0</span>
+            <span aria-live="polite">{quantity}</span>
           </Link>
           <button
             className="menu-toggle"

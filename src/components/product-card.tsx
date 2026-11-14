@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Product, formatPrice } from "@/lib/catalog";
 import { supportCampaign, supportPrice } from "@/lib/support";
 
-export function CoffeeLabel({
+export function CoffeeBag({
   product,
   large = false,
 }: {
@@ -14,8 +14,8 @@ export function CoffeeLabel({
   return (
     <div className={`bag-scene ${large ? "large" : ""}`}>
       <Image
-        {...product.label}
-        className="coffee-label-artwork"
+        {...product.image}
+        className="coffee-bag-artwork"
         sizes={
           large
             ? "(max-width: 760px) 78vw, 420px"
@@ -38,8 +38,8 @@ export function ProductCard({
       className="product-card"
     >
       <div className={`product-visual ${product.color}`}>
-        <span className="product-tag">{product.methods.join(" / ")}</span>
-        <CoffeeLabel product={product} />
+        <span className="product-tag">{product.method}</span>
+        <CoffeeBag product={product} />
         <span className="product-arrow">
           <ArrowUpRight size={21} />
         </span>
@@ -69,13 +69,7 @@ export function ProductCard({
           støtteformål
         </p>
       )}
-      <p className="product-note">
-        {product.id === "guatemala"
-          ? "Afbalanceret. Med espresso i tankerne."
-          : product.id === "ethiopia"
-            ? "Lysristet. Til dit filterritual."
-            : "En alsidig kaffe til hverdagens kop."}
-      </p>
+      <p className="product-note">{product.flavorNotes.join(" · ")}</p>
     </Link>
   );
 }

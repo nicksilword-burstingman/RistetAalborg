@@ -28,7 +28,7 @@ export default function SupportPage() {
           <h2>20 kr. ekstra. Uanset posens størrelse.</h2>
           <p>
             En pose på 250 g til 80 kr. bliver til 100 kr. En pose på 1 kg til
-            260 kr. bliver til 280 kr. De ekstra 20 kr. er tiltænkt
+            280 kr. bliver til 300 kr. De ekstra 20 kr. er tiltænkt
             støtteformålet.
           </p>
         </div>

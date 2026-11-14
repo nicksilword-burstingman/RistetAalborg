@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Heart } from "lucide-react";
-import { products, formatPrice } from "@/lib/catalog";
+import { products, featuredProducts, formatPrice } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { FilmIntro } from "@/components/film-intro";
 
@@ -117,7 +117,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="product-grid">
-          {products.map((product) => (
+          {featuredProducts.map((product) => (
             <ProductCard product={product} key={product.id} />
           ))}
         </div>

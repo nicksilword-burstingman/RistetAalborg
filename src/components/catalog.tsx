@@ -29,9 +29,11 @@ export function Catalog() {
             onChange={(e) => update("origin", e.target.value)}
           >
             <option value="">Alle lande</option>
-            {products.map((p) => (
-              <option key={p.id}>{p.country}</option>
-            ))}
+            {[...new Set(products.map((product) => product.country))].map(
+              (country) => (
+                <option key={country}>{country}</option>
+              ),
+            )}
           </select>
         </label>
         <label>
@@ -53,7 +55,8 @@ export function Catalog() {
           >
             <option value="">Alle ristninger</option>
             <option>Lys</option>
-            <option>Ikke fastlagt</option>
+            <option>Mellem</option>
+            <option>Mørk</option>
           </select>
         </label>
         <label>
