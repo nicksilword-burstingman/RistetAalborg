@@ -8,6 +8,7 @@ export const metadata = {
   title: "Vores rejse – mennesket bag Ristet Aalborg",
   description:
     "Fra en solorejse i Asien og medicinstudiet til et lille kafferisteri i Aalborg. Følg den personlige rejse mod friskristet specialkaffe til en fair pris.",
+  alternates: { canonical: "/om-os" },
 };
 export default function Page() {
   const { chapters } = timelineRepository().read();

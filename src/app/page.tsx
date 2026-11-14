@@ -5,9 +5,31 @@ import { products, featuredProducts, formatPrice } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { FilmIntro } from "@/components/film-intro";
 
+export const metadata = {
+  title: "Ristet Aalborg – friskristet specialkaffe på bestilling",
+  description:
+    "Friskristet specialkaffe på bestilling fra et uafhængigt kafferisteri i Aalborg. Udforsk espresso, filterkaffe og kaffeabonnement. God kaffe til en fair pris.",
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Ristet Aalborg",
+            url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+            logo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/images/logo.png`,
+            slogan: "Friskristet specialkaffe. Til en fair pris.",
+            description:
+              "Uafhængigt mikroristeri i Aalborg med friskristet specialkaffe på bestilling.",
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <FilmIntro />
       <section className="cover" id="forsiden" aria-labelledby="cover-title">
         <div className="editorial-kicker">
@@ -155,8 +177,8 @@ export default function Home() {
       <section className="section origin-editorial">
         <div className="origin-photo">
           <Image
-            src="/images/coffee-plantation-reference.png"
-            alt="Mænd undersøger kaffeplanter i en plantage. Illustrativt referencefoto."
+            src="/images/handpicked-coffee.webp"
+            alt="En kaffedyrker plukker modne, røde kaffebær med hånden blandt grønne kaffeplanter"
             fill
             sizes="(max-width:760px) 100vw, 50vw"
           />
@@ -164,27 +186,24 @@ export default function Home() {
         <div className="origin-copy">
           <p className="eyebrow">03 / FØR DEN FØRSTE SLURK</p>
           <h2>
-            En god kop
+            Mange hænder.
             <br />
-            begynder <em>langt herfra.</em>
+            <em>Én god kop.</em>
           </h2>
           <p>
-            Før ristningen. Før kværnen. Før din morgen. Kaffe begynder som et
-            bær på en plante og passerer gennem mange hænder på vej til koppen.
+            Før din første slurk er der nogen, der har stået med hænderne blandt
+            kaffebærrene. Plukket, sorteret og passet på den råvare, vi får lov
+            at riste. God kaffe begynder med mennesker.
           </p>
           <p>
-            Det fortjener vores nysgerrighed. På produktsiderne finder du de
-            oplysninger om oprindelse og forarbejdning, vi har bekræftet. Resten
-            tilføjer vi, når vi ved det.
+            Derfor går vi op i, hvor bønnerne kommer fra, og hvad de kan blive
+            til i koppen. Fra Guatemalas højland til din kaffepause i Aalborg:
+            Specialkaffe må gerne have en historie. Prisen behøver ikke være en
+            hel roman.
           </p>
           <Link href="/shop" className="text-link">
             Lær din kaffe at kende <ArrowUpRight size={18} />
           </Link>
-          <p className="photo-credit">
-            Illustrativt plantagefoto fra vores billedmateriale. Billedet er
-            ikke dokumentation for et eget besøg, en leverandørrelation eller
-            Fairtrade-certificering.
-          </p>
         </div>
       </section>
       <section className="section founder-editorial">
@@ -194,17 +213,19 @@ export default function Home() {
             <span>100 % PERSONLIGT</span>
           </div>
           <Image
-            src="/images/logo.png"
-            alt="Vores kaffebønne med solbriller og en kop i hånden"
-            width={520}
-            height={520}
+            src="/images/founder-choosing-beans.webp"
+            alt="Grundlæggeren af Ristet Aalborg på jagt efter kaffebønner til sit eget mikroristeri"
+            width={1400}
+            height={1867}
+            sizes="(max-width: 760px) 90vw, 42vw"
+            className="founder-portrait"
           />
           <span className="founder-sticker">
             Mange idéer.
             <br />
             <em>Ét stort hjerte.</em>
           </span>
-          <small>MIT RISTERI. MIT TEMPO. MIN KAFFEKÆRLIGHED.</small>
+          <small>PÅ JAGT EFTER BØNNER. OG EN IDÉ, DER IKKE VILLE SLIPPE.</small>
         </div>
         <div className="founder-copy">
           <p className="eyebrow">
@@ -295,7 +316,9 @@ export default function Home() {
           <Link href="/bryggeguide" className="text-link">
             Bryg en kop, du kan lide <ArrowUpRight size={18} />
           </Link>
-          <small>Abonnement åbner senere. Bryggeguides er klar nu.</small>
+          <small>
+            Sammensæt dit abonnement og gem dit valg. Betaling åbner senere.
+          </small>
         </div>
       </section>
       <section className="newsletter editorial-newsletter">

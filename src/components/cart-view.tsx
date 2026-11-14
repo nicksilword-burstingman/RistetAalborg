@@ -7,12 +7,18 @@ import { formatPrice, formatWeight } from "@/lib/catalog";
 import { cartItemKey, quoteCart } from "@/lib/cart";
 import { useCart } from "./cart-provider";
 import { QuantitySelector } from "./quantity-selector";
+import { SubscriptionsInCart } from "./subscriptions-in-cart";
+import {
+  subscriptionKey,
+  subscriptionPrice,
+  subscriptionCoffees,
+} from "@/lib/subscriptions";
 
 export function CartView() {
   const cart = useCart();
   const quote = quoteCart(cart.items);
   if (!cart.ready) return <p role="status">Henter din kurv …</p>;
-  if (!cart.items.length)
+  if (!cart.items.length && !cart.subscriptions.length)
     return (
       <div className="empty-state">
         <h2>Der er plads til god kaffe.</h2>
@@ -25,6 +31,7 @@ export function CartView() {
   return (
     <div className="cart-layout">
       <div className="cart-groups">
+        <SubscriptionsInCart />
         {quote.groups.map((group) => (
           <article key={group.key} className="cart-group">
             <Link
@@ -93,40 +100,77 @@ export function CartView() {
       </div>
       <aside className="cart-summary" aria-label="Samlet pris">
         <p className="eyebrow">DIT KAFFEOVERBLIK</p>
-        <dl>
-          <div>
-            <dt>Kaffe og eventuel støtte</dt>
-            <dd>{formatPrice(quote.totalOre + quote.discountOre)}</dd>
-          </div>
-          {quote.discountOre > 0 && (
+        {quote.groups.length > 0 && (
+          <dl>
             <div>
-              <dt>Mængderabat</dt>
-              <dd>−{formatPrice(quote.discountOre)}</dd>
+              <dt>Enkeltkøb og eventuel støtte</dt>
+              <dd>{formatPrice(quote.totalOre + quote.discountOre)}</dd>
             </div>
-          )}
-          <div>
-            <dt>Fragt</dt>
-            <dd>Beregnes i kassen</dd>
+            {quote.discountOre > 0 && (
+              <div>
+                <dt>Mængderabat</dt>
+                <dd>−{formatPrice(quote.discountOre)}</dd>
+              </div>
+            )}
+            <div>
+              <dt>Fragt</dt>
+              <dd>Beregnes i kassen</dd>
+            </div>
+            <div className="cart-total">
+              <dt>Enkeltkøb inkl. moms</dt>
+              <dd>{formatPrice(quote.totalOre)}</dd>
+            </div>
+          </dl>
+        )}
+        {cart.subscriptions.length > 0 && (
+          <div className="cart-subscription-overview">
+            <p className="eyebrow">ABONNEMENT · FORELØBIGE PRISER</p>
+            <dl>
+              {cart.subscriptions.map((item) => (
+                <div key={subscriptionKey(item)}>
+                  <dt>
+                    {subscriptionCoffees[item.coffee]}
+                    <small>
+                      {item.quantity} × {formatWeight(item.grams)} hver{" "}
+                      {item.weeks}. uge
+                    </small>
+                  </dt>
+                  <dd>
+                    {cart.subscriptionSettings
+                      ? formatPrice(
+                          subscriptionPrice(item, cart.subscriptionSettings),
+                        )
+                      : "Afventer pris"}
+                    <small>pr. levering</small>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p>Inkl. moms, før fragt. Ingen abonnementer er aktive.</p>
           </div>
-          <div className="cart-total">
-            <dt>I alt inkl. moms</dt>
-            <dd>{formatPrice(quote.totalOre)}</dd>
-          </div>
-        </dl>
-        <p>
-          {quote.quantity} {quote.quantity === 1 ? "pose" : "poser"} ·{" "}
-          {formatWeight(quote.totalGrams)} hele bønner
-        </p>
+        )}
+        {quote.groups.length > 0 && (
+          <p>
+            {quote.quantity} {quote.quantity === 1 ? "pose" : "poser"} ·{" "}
+            {formatWeight(quote.totalGrams)} hele bønner
+          </p>
+        )}
         <div className="cart-checkout-note">
           <Link href="/kasse" className="button dark">
             Gå til kassen <ArrowUpRight size={18} />
           </Link>
-          <p>Vælg levering og gennemgå din bestilling i kassen.</p>
+          <p>
+            {cart.subscriptions.length
+              ? "Dine kaffevalg er gemt i kurven. Se dem samlet i kassen. Abonnementer er endnu ikke aktive."
+              : "Vælg levering og gennemgå din bestilling i kassen."}
+          </p>
         </div>
-        <p className="cart-pricing-explanation">
-          Mængdepris beregnes automatisk for samme kaffe og ristning. Vi pakker
-          stadig i de posestørrelser, du har valgt.
-        </p>
+        {quote.groups.length > 0 && (
+          <p className="cart-pricing-explanation">
+            Mængdepris beregnes automatisk for samme kaffe og ristning. Vi
+            pakker stadig i de posestørrelser, du har valgt.
+          </p>
+        )}
         {cart.storageError && <p role="alert">{cart.storageError}</p>}
       </aside>
     </div>

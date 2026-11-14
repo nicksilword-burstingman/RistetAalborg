@@ -106,29 +106,40 @@ export function orderRepository(db: DatabaseSync) {
         | "quote"
         | "siteUrl"
         | "termsVersion"
-      >,
+      > & { customerId?: string },
     ) {
       const id = randomUUID();
       const now = Date.now();
       const number = `RA-${new Date(now).toISOString().slice(0, 10).replaceAll("-", "")}-${id.slice(0, 8).toUpperCase()}`;
-      db.prepare(
-        `INSERT INTO commerce_orders
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        db.prepare(
+          `INSERT INTO commerce_orders
         (id,number,owner_hash,request_id,payload_hash,mode,mobilepay,customer,quote,site_url,terms_version,created_at)
         VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`,
-      ).run(
-        id,
-        number,
-        input.ownerHash,
-        input.requestId,
-        input.payloadHash,
-        input.mode,
-        Number(input.mobilePay),
-        JSON.stringify(input.customer),
-        JSON.stringify(input.quote),
-        input.siteUrl,
-        input.termsVersion,
-        now,
-      );
+        ).run(
+          id,
+          number,
+          input.ownerHash,
+          input.requestId,
+          input.payloadHash,
+          input.mode,
+          Number(input.mobilePay),
+          JSON.stringify(input.customer),
+          JSON.stringify(input.quote),
+          input.siteUrl,
+          input.termsVersion,
+          now,
+        );
+        if (input.customerId)
+          db.prepare(
+            "INSERT INTO commerce_customer_links(order_id,user_id) VALUES(?,?)",
+          ).run(id, input.customerId);
+        db.exec("COMMIT");
+      } catch (error) {
+        db.exec("ROLLBACK");
+        throw error;
+      }
       return byId(id)!;
     },
     attachSession(orderId: string, sessionId: string, url: string) {

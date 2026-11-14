@@ -52,7 +52,7 @@ export function Header() {
           <Link
             href="/kurv"
             className="cart-link"
-            aria-label={`Indkøbskurv, ${quantity} ${quantity === 1 ? "pose" : "poser"}`}
+            aria-label={`Indkøbskurv, ${quantity} ${quantity === 1 ? "vare" : "varer"}`}
           >
             <ShoppingBag size={20} />
             <span aria-live="polite">{quantity}</span>

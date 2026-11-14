@@ -5,6 +5,8 @@ import { getDatabase } from "@/lib/server/database";
 import { orderRepository } from "@/lib/server/order-repository";
 import { paymentConfiguration } from "@/lib/server/checkout-config";
 import { CheckoutSettingsEditor } from "@/components/checkout-settings-editor";
+import { SubscriptionSettingsEditor } from "@/components/subscription-settings-editor";
+import { subscriptionSettings } from "@/lib/server/subscription-repository";
 import { OrderFulfillmentButton } from "@/components/order-fulfillment-button";
 import { orderStatuses } from "@/lib/checkout";
 import { formatPrice, formatWeight } from "@/lib/catalog";
@@ -85,6 +87,7 @@ export default async function CommerceAdminPage() {
         </p>
       </div>
       <CheckoutSettingsEditor initialSettings={settings} />
+      <SubscriptionSettingsEditor initial={subscriptionSettings()} />
       <section className="admin-order-list">
         <h2>Seneste bestillinger</h2>
         <p>

@@ -5,6 +5,7 @@ import { orderRepository } from "@/lib/server/order-repository";
 import { paymentConfiguration } from "@/lib/server/checkout-config";
 import { checkoutOwner, privateHeaders } from "@/lib/server/checkout-http";
 import { stripeClient, checkoutParameters } from "@/lib/server/stripe-payments";
+import { customerSession } from "@/lib/server/customer-auth";
 import {
   digest,
   isSameOrigin,
@@ -79,7 +80,9 @@ export async function POST(request: Request) {
       "Dette betalingsforsøg er afsluttet eller udløbet. Genindlæs kassen for at starte et nyt.",
       409,
     );
+  const account = await customerSession(request.headers);
   order ??= repo.create({
+    customerId: account?.user.id,
     ownerHash,
     requestId: input.requestId,
     payloadHash,

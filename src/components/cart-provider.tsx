@@ -16,9 +16,24 @@ import {
   quoteCart,
   type CartItem,
 } from "@/lib/cart";
+import {
+  parseSubscriptions,
+  saveSubscriptionSelection,
+  subscriptionKey,
+  subscriptionSettingsSchema,
+  type SubscriptionSelection,
+  type SubscriptionSettings,
+} from "@/lib/subscriptions";
+
+const SUBSCRIPTION_STORAGE_KEY = "ristet-subscriptions-v1";
 
 type CartContextValue = {
   items: CartItem[];
+  subscriptions: SubscriptionSelection[];
+  subscriptionSettings: SubscriptionSettings | null;
+  subscriptionError: string;
+  saveSubscription: (item: SubscriptionSelection, previousKey?: string) => void;
+  removeSubscription: (key: string) => void;
   ready: boolean;
   storageError: string;
   quantity: number;
@@ -35,6 +50,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [storageError, setStorageError] = useState("");
   const currentItems = useRef<CartItem[]>([]);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionSelection[]>(
+    [],
+  );
+  const currentSubscriptions = useRef<SubscriptionSelection[]>([]);
+  const [subscriptionSettings, setSubscriptionSettings] =
+    useState<SubscriptionSettings | null>(null);
+  const [subscriptionError, setSubscriptionError] = useState("");
 
   useEffect(() => {
     const readStored = () => {
@@ -43,6 +65,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const next = stored ? parseCart(JSON.parse(stored)) : [];
         currentItems.current = next;
         setItems(next);
+        const rawSubscriptions = window.localStorage.getItem(
+          SUBSCRIPTION_STORAGE_KEY,
+        );
+        const selections = rawSubscriptions
+          ? parseSubscriptions(JSON.parse(rawSubscriptions))
+          : [];
+        currentSubscriptions.current = selections;
+        setSubscriptions(selections);
       } catch {
         setStorageError(
           "Kurven kan ikke gemmes i denne browser. Dine valg bliver her, så længe siden er åben.",
@@ -52,11 +82,52 @@ export function CartProvider({ children }: { children: ReactNode }) {
     readStored();
     setReady(true);
     const sync = (event: StorageEvent) => {
-      if (event.key === CART_STORAGE_KEY || event.key === null) readStored();
+      if (
+        event.key === CART_STORAGE_KEY ||
+        event.key === SUBSCRIPTION_STORAGE_KEY ||
+        event.key === null
+      )
+        readStored();
     };
     window.addEventListener("storage", sync);
     return () => window.removeEventListener("storage", sync);
   }, []);
+
+  useEffect(() => {
+    const abort = new AbortController();
+    fetch("/api/subscriptions", { cache: "no-store", signal: abort.signal })
+      .then(async (res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((data) =>
+        setSubscriptionSettings(
+          subscriptionSettingsSchema.parse(data.settings),
+        ),
+      )
+      .catch(() => {
+        if (!abort.signal.aborted)
+          setSubscriptionError(
+            "Abonnementspriserne kunne ikke hentes. Genindlæs siden for at prøve igen.",
+          );
+      });
+    return () => abort.abort();
+  }, []);
+
+  const persistSubscriptions = (next: SubscriptionSelection[]) => {
+    currentSubscriptions.current = next;
+    setSubscriptions(next);
+    try {
+      window.localStorage.setItem(
+        SUBSCRIPTION_STORAGE_KEY,
+        JSON.stringify(next),
+      );
+    } catch {
+      setStorageError(
+        "Dine kaffevalg kan ikke gemmes i denne browser. Behold siden åben.",
+      );
+    }
+  };
 
   const persist = (next: CartItem[]) => {
     currentItems.current = next;
@@ -74,9 +145,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         items,
+        subscriptions,
+        subscriptionSettings,
+        subscriptionError,
+        saveSubscription: (item, previousKey) =>
+          persistSubscriptions(
+            saveSubscriptionSelection(
+              currentSubscriptions.current,
+              item,
+              previousKey,
+            ),
+          ),
+        removeSubscription: (key) =>
+          persistSubscriptions(
+            currentSubscriptions.current.filter(
+              (item) => subscriptionKey(item) !== key,
+            ),
+          ),
         ready,
         storageError,
-        quantity: quoteCart(items).quantity,
+        quantity:
+          quoteCart(items).quantity +
+          subscriptions.reduce((sum, item) => sum + item.quantity, 0),
         addItem: (item) => persist(addCartItem(currentItems.current, item)),
         updateQuantity: (key, quantity) =>
           persist(

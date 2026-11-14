@@ -6,17 +6,27 @@ import { ArrowDownRight, ArrowUpRight, Pause, Play } from "lucide-react";
 
 export function FilmIntro() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playbackChoice = useRef<"auto" | "play" | "pause">("auto");
   const [playing, setPlaying] = useState(false);
+  const [unavailable, setUnavailable] = useState(false);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const video = videoRef.current;
     if (!video) return;
+    let visible = true;
+    const saveData = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection?.saveData;
 
     const syncMotion = () => {
-      if (preference.matches) {
+      if (
+        playbackChoice.current === "pause" ||
+        document.hidden ||
+        !visible ||
+        ((preference.matches || saveData) && playbackChoice.current !== "play")
+      ) {
         video.pause();
-        video.currentTime = 0;
         setPlaying(false);
       } else {
         void video
@@ -27,9 +37,20 @@ export function FilmIntro() {
     };
 
     syncMotion();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        syncMotion();
+      },
+      { threshold: 0.05 },
+    );
+    observer.observe(video);
+    document.addEventListener("visibilitychange", syncMotion);
     preference.addEventListener("change", syncMotion);
     return () => {
       preference.removeEventListener("change", syncMotion);
+      document.removeEventListener("visibilitychange", syncMotion);
+      observer.disconnect();
       video.pause();
     };
   }, []);
@@ -38,11 +59,13 @@ export function FilmIntro() {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
+      playbackChoice.current = "play";
       void video
         .play()
         .then(() => setPlaying(true))
         .catch(() => setPlaying(false));
     } else {
+      playbackChoice.current = "pause";
       video.pause();
       setPlaying(false);
     }
@@ -54,20 +77,33 @@ export function FilmIntro() {
         <video
           ref={videoRef}
           className="film-intro-video"
-          poster="/video/espresso-poster.jpg"
+          poster="/video/coffee-origins-poster.jpg"
           muted
           loop
           playsInline
           preload="none"
           aria-hidden="true"
           tabIndex={-1}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onError={() => {
+            setPlaying(false);
+            setUnavailable(true);
+          }}
         >
-          <source src="/video/espresso-ritual.webm" type="video/webm" />
+          <source
+            src="/video/coffee-origins.mp4"
+            type="video/mp4"
+            onError={() => {
+              setPlaying(false);
+              setUnavailable(true);
+            }}
+          />
         </video>
         <div className="film-intro-shade" aria-hidden="true" />
         <div className="film-intro-top" aria-hidden="true">
           <span>ET LILLE RISTERI. EN STOR KÆRLIGHED TIL KAFFE.</span>
-          <span>01 / 02</span>
+          <span>FRA BÆR TIL BØNNE</span>
         </div>
         <div className="film-intro-content">
           <p className="film-intro-eyebrow">RISTET I AALBORG · TIL DIG</p>
@@ -89,19 +125,25 @@ export function FilmIntro() {
             Se mere af historien <ArrowDownRight size={19} aria-hidden="true" />
           </a>
           <div className="film-intro-bottom-right">
+            <Link href="/information/filmen" className="film-source-link">
+              Om filmen
+            </Link>
             <button
               type="button"
               className="film-intro-control"
               onClick={togglePlayback}
               aria-label={playing ? "Sæt filmen på pause" : "Afspil filmen"}
               aria-pressed={playing}
+              disabled={unavailable}
             >
               {playing ? (
                 <Pause size={16} fill="currentColor" />
               ) : (
                 <Play size={16} fill="currentColor" />
               )}
-              <span>{playing ? "Pause" : "Afspil"}</span>
+              <span>
+                {unavailable ? "Billede vises" : playing ? "Pause" : "Afspil"}
+              </span>
             </button>
           </div>
         </div>

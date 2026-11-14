@@ -13,6 +13,7 @@ import {
 } from "../src/lib/checkout";
 import { initializeDatabase } from "../src/lib/server/database";
 import { orderRepository } from "../src/lib/server/order-repository";
+import { customerRepository } from "../src/lib/server/customer-repository";
 import { reconcileStripeEvent } from "../src/lib/server/stripe-reconciliation";
 import { checkoutParameters } from "../src/lib/stripe-checkout";
 import { assessPaymentConfiguration } from "../src/lib/payment-configuration";
@@ -104,6 +105,40 @@ function setup() {
   });
   return { db, repo, order };
 }
+
+test("customer order history requires an explicit link and rolls back failed links", () => {
+  const { db, repo, order } = setup();
+  const customers = customerRepository(db);
+  assert.deepEqual(customers.orders("customer-a"), []);
+  const input = {
+    ownerHash: "account-owner",
+    requestId: randomUUID(),
+    payloadHash: "test-hash",
+    mode: "test" as const,
+    mobilePay: false,
+    customer,
+    quote: order.quote,
+    siteUrl: "http://localhost:3000",
+    termsVersion: "test-terms",
+    customerId: "customer-a",
+  };
+  const linked = repo.create(input);
+  assert.deepEqual(
+    customers.orders("customer-a").map((item) => item.number),
+    [linked.number],
+  );
+  assert.deepEqual(customers.orders("customer-b"), []);
+  db.exec(
+    "CREATE TRIGGER reject_customer_link BEFORE INSERT ON commerce_customer_links BEGIN SELECT RAISE(ABORT, 'test link failure'); END",
+  );
+  const count = repo.list().length;
+  assert.throws(
+    () => repo.create({ ...input, requestId: randomUUID() }),
+    /test link failure/,
+  );
+  assert.equal(repo.list().length, count);
+  db.close();
+});
 function fixtureEvent(
   order: ReturnType<typeof setup>["order"],
   overrides: Record<string, unknown> = {},

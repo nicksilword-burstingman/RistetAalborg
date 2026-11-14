@@ -1,5 +1,10 @@
 import { Catalog } from "@/components/catalog";
-export const metadata = { title: "Shop specialkaffe" };
+export const metadata = {
+  title: "Shop specialkaffe – espresso og filter, ristet i Aalborg",
+  description:
+    "Find din næste kaffe hos Ristet Aalborg. Friskristede hele bønner fra Guatemala, Etiopien og Brasilien til espresso og filter. Specialkaffe til en fair pris.",
+  alternates: { canonical: "/shop" },
+};
 export default function Shop() {
   return (
     <section className="section catalog-page">

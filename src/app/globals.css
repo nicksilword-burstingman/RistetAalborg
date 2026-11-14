@@ -718,7 +718,7 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 a {
@@ -783,7 +783,9 @@ button {
 }
 a:focus-visible,
 button:focus-visible,
-select:focus-visible {
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
   outline: 3px solid #b97858;
   outline-offset: 5px;
 }
@@ -2153,7 +2155,8 @@ legend {
   flex-direction: column;
   justify-content: space-between;
   color: var(--cream);
-  background: #33251e url("/video/espresso-poster.jpg") center / cover no-repeat;
+  background: #33251e url("/video/coffee-origins-poster.jpg") center / cover
+    no-repeat;
   padding: 27px 5% 30px;
 }
 .film-intro-video,

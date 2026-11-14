@@ -80,5 +80,19 @@ export function initializeDatabase(db: DatabaseSync) {
     CREATE TABLE IF NOT EXISTS checkout_attempts (
       id INTEGER PRIMARY KEY, owner_hash TEXT NOT NULL, attempted_at INTEGER NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS subscription_settings (
+      id INTEGER PRIMARY KEY CHECK(id = 1), document TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS customer_profiles (
+      user_id TEXT PRIMARY KEY, address TEXT, subscriptions TEXT NOT NULL DEFAULT '[]', updated_at INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS commerce_customer_links (
+      order_id TEXT PRIMARY KEY REFERENCES commerce_orders(id), user_id TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS commerce_customer_user ON commerce_customer_links(user_id);
+    CREATE TABLE IF NOT EXISTS customer_auth_attempts (
+      id INTEGER PRIMARY KEY, key TEXT NOT NULL, attempted_at INTEGER NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS customer_auth_attempt_key ON customer_auth_attempts(key, attempted_at);
   `);
 }

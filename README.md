@@ -4,7 +4,7 @@ The storefront has a white page background, an editorial homepage with a video o
 
 The homepage uses an editorial masthead, documentary cultivation/harvest imagery, a personal founder story and a prominent support section. Founder copy reflects the owner's description of studying medicine and wanting to help others. It makes no medical claims or claims about competitors. Documentary images are explicitly illustrative, not supplier evidence or Fairtrade certification. Sources, authors and reuse licenses are recorded in `public/images/ATTRIBUTION.md` and credited on the page. Replace illustrative images with documented supplier photography when available.
 
-Danish storefront built with Next.js App Router, React, TypeScript, Tailwind CSS and Zod. Includes a responsive editorial homepage, accessible navigation, six draft coffee editions (three coffees, each for espresso and filter), brewing guides, subscription configuration preview and clearly marked information drafts.
+Danish storefront built with Next.js App Router, React, TypeScript, Tailwind CSS and Zod. Includes a responsive editorial homepage, accessible navigation, six draft coffee editions (three coffees, each for espresso and filter), brewing guides, subscription selections in the cart, customer profiles and clearly marked information drafts.
 
 ## Run locally
 
@@ -61,20 +61,32 @@ Hver kaffeudgave har egen kort metabeskrivelse, canonical, Open Graph/Twitter-bi
 
 This is **not open for live orders**. Guest checkout includes contact/address fields, configurable Danish shipping, server-authoritative pricing and VAT snapshots, persistent orders, hosted Stripe Checkout, signature-verified payment/refund events and private order confirmations. `/admin/handel` provides shipping settings, payment readiness, orders, fulfillment and paid-order statistics separated from test purchases. Payment is disabled by default. A real Stripe sandbox transaction has not yet been performed. See [checkout setup](docs/CHECKOUT.md).
 
-Product publication/stock administration, customer accounts, order email delivery, carrier labels/pickup points, recurring billing and Saldi remain unfinished. The coffees are drafts; live checkout rejects draft products. The existing owner login and timeline editor are preserved. The subscription selector is a local preview only; 279 DKK is an example for 1 kg, with other prices unspecified.
+Product publication/stock administration, account email verification/password recovery, order email delivery, carrier labels/pickup points, recurring billing and Saldi remain unfinished. The coffees are drafts; live checkout rejects draft products. The existing owner login and timeline editor are preserved.
+
+## Customer profiles and subscription selections
+
+`/konto` supports real registration, login, logout, password changes, a saved Danish shipping address, saved subscription preferences and the customer's own linked orders. Better Auth manages hashed passwords and server-side sessions in separate tables in the existing SQLite database. Customer access never grants owner access. Guest orders are not attached by matching an unverified email address. New orders attach to the authenticated customer ID in the same database transaction as order creation.
+
+The optional `BETTER_AUTH_URL` defaults to `NEXT_PUBLIC_SITE_URL`. With localhost configured, local loopback and private LAN addresses from this machine are accepted for local testing. A public deployment must set its actual HTTPS URL. Set `BETTER_AUTH_SECRET` to a random secret or keep the generated `customer-auth.secret` in the persistent data directory. Back it up together with the database and uploads; changing it invalidates customer sessions. No email provider is connected, so email verification, password recovery and email changes must be implemented before public account launch. Password changes currently require the existing password and revoke other sessions.
+
+`/abonnement` supports espresso/filter/mixed, 250 g/500 g/1 kg, delivery every 2/4/6 weeks, the roaster's choice or a specific coffee, and quantity. Selections can be added, edited and removed in the cart, or saved to a profile. Provisional prices are 80/150/279 DKK per delivery and can be changed through the authenticated `/admin/handel` page. Prices are fetched from the server and remain separate from one-time quantity discounts. No active subscription or recurring charge is created. Checkout with subscription selections remains closed until recurring billing is implemented.
+
+Run `npm run test:customer-http` and `npm run test:checkout-http` after `npm run build` for isolated HTTP checks against disposable databases. These checks do not send real payments or modify the owner's data. The existing SQLite storage is kept for this single-server installation; PostgreSQL remains a future migration before scaling to multiple application instances.
 
 Search engine indexing is disabled through robots and metadata while draft products and legal content are public. Enable indexing only after publication rules, real business details and legal review are completed. Product Offer JSON-LD is intentionally deferred until real published offers exist; no invented inventory or purchasable offer is emitted.
 
 ## Next phases and architecture
 
 1. **Phase 2:** PostgreSQL + Prisma, authenticated administration with server-side roles, product publication workflow, stock and price management, structured content editing, and signed cloud image uploads with validated MIME, file size and image decoding. Preview access must be separate from the public published catalog. Evaluate a maintained authentication library before implementation; never hardcode passwords.
-2. **Phase 3:** Finish sandbox verification, product publication, stock reservation, order email, customer accounts and recurring billing. Guest checkout, server prices, addresses, configurable shipping, hosted Stripe sessions, deduplicated signed webhooks and cumulative refunds are implemented. Stripe MobilePay is optional for one-time purchases and must also be activated in the Stripe account; recurring MobilePay payments are not supported by Stripe. No card data enters the application.
+2. **Phase 3:** Finish sandbox verification, product publication, stock reservation, order email, account verification/recovery and recurring billing. Customer profiles, guest checkout, server prices, addresses, configurable shipping, hosted Stripe sessions, deduplicated signed webhooks and cumulative refunds are implemented. Stripe MobilePay is optional for one-time purchases and must also be activated in the Stripe account; recurring MobilePay payments are not supported by Stripe. No card data enters the application.
 3. **Phase 4:** Saldi is the confirmed accounting/ERP system. Before writing an adapter, inspect https://github.com/DANOSOFT/saldi at a recorded commit, its license, API authentication, REST, order/invoice/credit-note, inventory and webshop modules. This inspection is **not yet performed**, and no endpoint capability is assumed. Use a transactional outbox, retryable queue, idempotency keys, immutable accounting snapshots, provider payment/refund references and Saldi reference mappings. Add reconciliation and admin retry/history views. Do not modify Saldi core. Design customer and price models for CVR/B2B and inventory mappings.
 4. **Phase 5:** integration/security tests, browser and accessibility checks, provider sandbox checkout/refund tests, Saldi reconciliation, backups, monitoring, production legal content and deployment. Set the real public URL; publish only approved products.
 
 Keep commerce, payment and accounting separate. Never derive an accounting transaction from untrusted client totals. Preserve VAT allocations across line discounts and shipping, including refunds, rather than recomputing historical orders from current catalog data.
 
 ## Assets
+
+The homepage uses an owner-supplied hand-picking photograph and a founder photograph browsing coffee beans, optimized as local WebP assets with EXIF removed. Its documentary opening film is under 10 seconds, muted and locally served. It respects reduced motion and data-saving preferences, supports pause/play and pauses offscreen. Source attribution, archive quality limits and reproducible export instructions are documented in [MEDIA.md](docs/MEDIA.md). The footage is illustrative and does not imply a supplier relationship or certification.
 
 Original logo and Guatemala label supplied by the business. Temporary editorial photographs downloaded from Unsplash; stored locally with no third-party requests at page load:
 

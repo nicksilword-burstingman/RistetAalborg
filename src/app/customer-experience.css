@@ -1,0 +1,490 @@
+.cover-copy > p:not(.eyebrow),
+.origin-copy > p:not(.eyebrow):not(.photo-credit),
+.founder-copy > p:not(.eyebrow),
+.manifesto-bottom > p,
+.everyday-editorial p:not(.eyebrow),
+.support-editorial > div > p:not(.eyebrow),
+.editorial-intro,
+.page-intro > p:not(.eyebrow),
+.reading-page > p:not(.eyebrow),
+.product-description p {
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.8;
+  color: #51463e;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+.support-editorial > div > p:not(.eyebrow) {
+  color: #fffaf3;
+}
+.cover-copy > p:not(.eyebrow) {
+  max-width: 370px;
+}
+.origin-photo {
+  border-radius: 4px;
+}
+.origin-photo img {
+  object-position: 48% 44%;
+}
+.founder-visual > .founder-portrait {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 37%;
+  mix-blend-mode: normal;
+  border-radius: 4px;
+}
+.founder-visual > small {
+  font-size: 10px;
+  line-height: 1.7;
+}
+.notice,
+.draft-note,
+.subscription-summary > p:not(.eyebrow) {
+  font-size: 14px;
+}
+.subscription-choices fieldset {
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--line);
+}
+.subscription-choices legend {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: -0.025em;
+}
+.subscription-choices legend > span {
+  font-size: 12px;
+  margin-right: 12px;
+  color: #686c53;
+}
+.subscription-choices fieldset > p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #655b52;
+  max-width: 480px;
+}
+.subscription-choices .choice-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.subscription-choices .choice-row button {
+  min-height: 55px;
+  padding: 15px 10px;
+  font-size: 15px;
+}
+.subscription-choices .choice-row small {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.subscription-choices .field-label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 25px;
+}
+.subscription-choices select {
+  font-size: 16px;
+  min-height: 50px;
+}
+.subscription-summary {
+  align-self: start;
+  position: sticky;
+  top: 125px;
+  border-radius: 5px;
+  padding: clamp(24px, 4vw, 48px);
+}
+.subscription-summary .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.subscription-summary > strong {
+  font-size: 32px;
+  letter-spacing: -0.04em;
+}
+.subscription-summary > .button {
+  margin-top: 28px;
+  width: 100%;
+  justify-content: center;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+}
+.subscription-summary .notice {
+  background: #ffffff75;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.subscription-cart {
+  margin-bottom: 30px;
+}
+.subscription-cart-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.subscription-cart-heading h2 {
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+.subscription-cart-heading > span {
+  display: block;
+  width: 100%;
+  font-size: 12px;
+  color: #5a5f46;
+}
+.subscription-cart-item {
+  background: #eef0e7;
+  padding: 24px;
+  border-radius: 4px;
+  margin: 14px 0;
+}
+.subscription-cart-item h3,
+.profile-subscription h3 {
+  font-size: 21px;
+  font-weight: 600;
+  margin: 8px 0;
+  letter-spacing: -0.025em;
+}
+.subscription-cart-item strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 18px;
+}
+.subscription-cart > p {
+  font-size: 13px;
+  color: #66594f;
+}
+.subscription-item-actions {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 18px;
+}
+.subscription-item-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  padding: 0;
+}
+.subscription-checkout {
+  max-width: 1000px;
+}
+.subscription-checkout > .text-link {
+  margin: 0 0 30px;
+}
+.subscription-checkout .page-intro {
+  margin-top: 35px;
+}
+.subscription-checkout > .button {
+  margin: 12px 20px 25px 0;
+}
+.checkout-summary .subscription-cart-item {
+  padding: 18px;
+}
+.checkout-summary .subscription-cart-item h3 {
+  font-size: 18px;
+}
+.account-shell {
+  max-width: 1440px;
+}
+.account-entry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7%;
+  align-items: start;
+}
+.account-form-card {
+  padding: clamp(24px, 3.5vw, 48px);
+  background: #f3f4ee;
+  border-radius: 5px;
+}
+.account-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 30px;
+}
+.account-switch button {
+  background: transparent;
+  padding: 0 0 16px;
+  font-size: 17px;
+  color: #675d54;
+  border-bottom: 2px solid transparent;
+}
+.account-switch button[aria-pressed="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  border-color: var(--ink);
+}
+.account-shell fieldset,
+.admin-commerce-settings fieldset {
+  min-width: 0;
+}
+.account-shell label,
+.profile-fields > label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+.account-shell input,
+.profile-fields input {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 14px;
+  border: 1px solid #33251e40;
+  background: white;
+  border-radius: 3px;
+  font-size: 16px;
+  color: var(--ink);
+}
+.account-shell form p {
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+.account-shell form .button {
+  margin-top: 8px;
+}
+.account-mail-note {
+  font-size: 13px;
+  color: #655b52;
+  margin-top: 23px;
+  line-height: 1.7;
+}
+.account-intro-card {
+  padding: 40px 0;
+}
+.account-intro-card h2 {
+  margin: 28px 0;
+  font-size: clamp(38px, 4vw, 58px);
+}
+.account-intro-card p,
+.account-intro-card li {
+  color: #574c43;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.account-intro-card ul {
+  padding-left: 20px;
+  margin: 24px 0 30px;
+}
+.account-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 7%;
+  align-items: start;
+}
+.account-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: sticky;
+  top: 120px;
+}
+.account-nav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 16px;
+  background: transparent;
+  text-align: left;
+  border-radius: 3px;
+  font-size: 14px;
+}
+.account-nav button[aria-current="page"] {
+  background: #e9ece0;
+  font-weight: 600;
+}
+.account-nav button:hover {
+  background: #f1f3eb;
+}
+.account-content {
+  min-width: 0;
+}
+.account-content > h2 {
+  font-size: clamp(30px, 3vw, 43px);
+  margin: 5px 0 20px;
+}
+.account-content > p:not(.eyebrow) {
+  margin-bottom: 25px;
+  color: #655b52;
+}
+.account-content > form {
+  margin-top: 28px;
+}
+.account-empty {
+  padding: 35px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin-top: 30px;
+}
+.account-empty h3 {
+  font-size: 23px;
+  font-weight: 600;
+  margin: 20px 0 10px;
+}
+.account-empty p {
+  margin: 15px 0;
+}
+.account-empty .text-link {
+  margin-top: 15px;
+}
+.account-feedback {
+  background: #edf0e5;
+  color: #3d4930;
+  padding: 17px 20px;
+  margin-bottom: 25px;
+  border-radius: 3px;
+}
+.profile-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+.account-content form fieldset > label {
+  max-width: 520px;
+}
+.account-content form fieldset > .text-link {
+  margin: 20px;
+  background: transparent;
+}
+.profile-subscription {
+  border-top: 1px solid var(--line);
+  padding: 25px 0;
+}
+.profile-subscription .eyebrow {
+  margin-top: 15px;
+}
+.account-orders {
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+}
+.account-orders li {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding: 25px 0;
+}
+.account-orders p {
+  font-size: 14px;
+  margin-top: 8px;
+}
+.account-loading {
+  min-height: 50vh;
+  padding: 90px 6%;
+}
+.film-source-link {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0.9;
+}
+.film-intro-description {
+  font-size: clamp(16px, 1.25vw, 18px);
+  max-width: 430px;
+  font-weight: 500;
+}
+.cart-subscription-overview {
+  border-top: 1px solid var(--line);
+  margin-top: 25px;
+  padding-top: 23px;
+}
+.cart-subscription-overview dl > div {
+  align-items: start;
+  gap: 20px;
+}
+.cart-subscription-overview dt {
+  max-width: 190px;
+}
+.cart-subscription-overview small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 7px;
+  line-height: 1.6;
+}
+.cart-subscription-overview > p:not(.eyebrow) {
+  font-size: 12px;
+}
+.film-source-list a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 900px) {
+  .account-layout {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 5%;
+  }
+  .account-entry {
+    gap: 5%;
+  }
+  .subscription-choices .choice-row {
+    gap: 6px;
+  }
+  .subscription-choices .choice-row button {
+    font-size: 13px;
+    padding-inline: 8px;
+  }
+}
+@media (max-width: 760px) {
+  .account-entry,
+  .account-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .account-intro-card {
+    padding: 20px 0;
+  }
+  .account-nav {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+  }
+  .account-nav button {
+    padding: 14px 10px;
+    font-size: 13px;
+  }
+  .profile-fields {
+    grid-template-columns: 1fr;
+  }
+  .subscription-summary {
+    position: static;
+  }
+  .subscription-choices .choice-row button {
+    font-size: 14px;
+  }
+  .founder-visual {
+    padding: 14px;
+  }
+  .founder-sticker {
+    right: -4px;
+    font-size: 21px;
+    padding: 16px;
+  }
+  .subscription-cart-item {
+    padding: 20px;
+  }
+  .account-shell .button {
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+}

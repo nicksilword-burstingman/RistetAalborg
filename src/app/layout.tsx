@@ -3,6 +3,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CartProvider } from "@/components/cart-provider";
 import "./globals.css";
+import "./customer-experience.css";
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
@@ -18,8 +19,16 @@ export const metadata: Metadata = {
     locale: "da_DK",
     type: "website",
     siteName: "Ristet Aalborg",
-    images: ["/images/coffee-hero.jpg"],
+    images: [
+      {
+        url: "/images/handpicked-coffee.webp",
+        width: 1197,
+        height: 1314,
+        alt: "Kaffebær plukkes i hånden – vejen til en god kop specialkaffe",
+      },
+    ],
   },
+  twitter: { card: "summary_large_image" },
 };
 export default function RootLayout({
   children,

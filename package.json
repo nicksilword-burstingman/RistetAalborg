@@ -14,10 +14,12 @@
     "data:backup": "tsx scripts/backup-content.ts",
     "test": "tsx --test tests/*.test.ts",
     "test:checkout-http": "tsx scripts/check-checkout-http.ts",
+    "test:customer-http": "tsx scripts/check-customer-http.ts",
     "format": "prettier --write src tests scripts content *.json *.ts *.mjs README.md",
     "format:check": "prettier --check src tests scripts content *.json *.ts *.mjs README.md"
   },
   "dependencies": {
+    "better-auth": "^1.7.25",
     "lucide-react": "^0.468.0",
     "next": "^16.0.0",
     "react": "^19.2.0",
@@ -32,6 +34,7 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "ffmpeg-static": "^5.3.0",
     "prettier": "^3.10.0",
     "tailwindcss": "^4.1.0",
     "tsx": "^4.20.0",

@@ -39,6 +39,14 @@ async function main() {
   const snapshot = new DatabaseSync(filename);
   try {
     snapshot.exec("DELETE FROM admin_sessions; DELETE FROM login_attempts;");
+    if (
+      snapshot
+        .prepare(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='customer_session'",
+        )
+        .get()
+    )
+      snapshot.exec("DELETE FROM customer_session;");
     await writeFile(
       path.join(directory, "historie.json"),
       JSON.stringify(createTimelineRepository(snapshot).read(), null, 2),
@@ -54,6 +62,10 @@ async function main() {
   await optionalCopy(
     path.join(dataDirectory(), "admin-password.hash"),
     path.join(directory, "admin-password.hash"),
+  );
+  await optionalCopy(
+    path.join(dataDirectory(), "customer-auth.secret"),
+    path.join(directory, "customer-auth.secret"),
   );
   console.log(
     `Sikkerhedskopi gemt i ${directory}. Kopiér mappen til en anden disk eller din backupplacering.`,

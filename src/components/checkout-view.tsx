@@ -13,6 +13,8 @@ import {
   Truck,
 } from "lucide-react";
 import { useCart } from "./cart-provider";
+import { SubscriptionsInCart } from "./subscriptions-in-cart";
+import type { CustomerProfile } from "@/lib/customer-profile";
 import { formatPrice, formatWeight } from "@/lib/catalog";
 import { quoteCart } from "@/lib/cart";
 import {
@@ -34,6 +36,11 @@ type QuoteResponse = {
 
 export function CheckoutView() {
   const cart = useCart();
+  const checkoutForm = useRef<HTMLFormElement>(null);
+  const [savedCustomer, setSavedCustomer] = useState<{
+    email: string;
+    address: CustomerProfile["address"];
+  } | null>(null);
   const [options, setOptions] = useState<Options | null>(null);
   const [shippingId, setShippingId] = useState("");
   const [quoted, setQuoted] = useState<QuoteResponse | null>(null);
@@ -50,6 +57,16 @@ export function CheckoutView() {
 
   useEffect(() => {
     const abort = new AbortController();
+    fetch("/api/konto", { cache: "no-store", signal: abort.signal })
+      .then(async (res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.user && data.profile?.address)
+          setSavedCustomer({
+            email: data.user.email,
+            address: data.profile.address,
+          });
+      })
+      .catch(() => {});
     setCancelled(
       new URLSearchParams(window.location.search).get("afbrudt") === "1",
     );
@@ -99,7 +116,13 @@ export function CheckoutView() {
 
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!quote || !options?.payment.ready || pending.current) return;
+    if (
+      !quote ||
+      !options?.payment.ready ||
+      pending.current ||
+      cart.subscriptions.length
+    )
+      return;
     const form = new FormData(event.currentTarget);
     const parsed = customerSchema.safeParse(
       Object.fromEntries(
@@ -178,6 +201,40 @@ export function CheckoutView() {
         Vi finder din kaffe frem …
       </p>
     );
+  if (!cart.items.length && cart.subscriptions.length)
+    return (
+      <section className="section subscription-checkout">
+        <Link href="/kurv" className="text-link">
+          ← Tilbage til kurven
+        </Link>
+        <div className="page-intro">
+          <p className="eyebrow">DIN KAFFE. DIN RYTME.</p>
+          <h1>
+            God kaffe.
+            <br />
+            <em>Planen er lagt.</em>
+          </h1>
+          <p>
+            Her er dine valg til et kommende kaffeabonnement. De er gemt i din
+            browser, og du kan også gemme dem på din profil.
+          </p>
+        </div>
+        <SubscriptionsInCart />
+        <div className="notice">
+          <strong>Der er ikke startet et abonnement.</strong>
+          <p>
+            Betaling, fragt og de endelige abonnementsvilkår er endnu ikke klar.
+            Du skal selv godkende en bestilling, når vi åbner.
+          </p>
+        </div>
+        <Link href="/konto" className="button dark">
+          Gem dine kaffevalg på din profil <ArrowUpRight size={18} />
+        </Link>
+        <Link href="/shop" className="text-link">
+          Udforsk resten af kaffen <ArrowUpRight size={17} />
+        </Link>
+      </section>
+    );
   if (!cart.items.length)
     return (
       <div className="checkout-empty">
@@ -233,11 +290,46 @@ export function CheckoutView() {
         </p>
       )}
       <form
+        ref={checkoutForm}
         onSubmit={pay}
         className="checkout-layout"
         aria-label="Kontakt, levering og betaling"
       >
         <div className="checkout-fields">
+          {savedCustomer && (
+            <div className="checkout-notice">
+              <p>Din profil har en gemt leveringsadresse.</p>
+              <button
+                type="button"
+                className="text-link"
+                onClick={() => {
+                  for (const [name, value] of Object.entries({
+                    ...savedCustomer.address,
+                    email: savedCustomer.email,
+                  })) {
+                    const field =
+                      checkoutForm.current?.elements.namedItem(name);
+                    if (field instanceof HTMLInputElement) field.value = value;
+                  }
+                }}
+              >
+                Brug min gemte adresse <ArrowUpRight size={16} />
+              </button>
+            </div>
+          )}
+          {cart.subscriptions.length > 0 && (
+            <div className="checkout-notice">
+              <strong>Dine abonnementer er stadig kaffevalg.</strong>
+              <p>
+                Betaling af en kurv med abonnementer åbner, når tilbagevendende
+                betaling og abonnementsvilkår er klar. Du er ikke tilmeldt noget
+                endnu.
+              </p>
+              <Link href="/konto" className="text-link">
+                Gem kaffevalgene på din profil <ArrowUpRight size={16} />
+              </Link>
+            </div>
+          )}
           <fieldset className="checkout-section" disabled={submitting}>
             <legend>
               <span>01</span> Dig og din kaffe
@@ -425,6 +517,7 @@ export function CheckoutView() {
           </fieldset>
         </div>
         <aside className="checkout-summary" aria-label="Din bestilling">
+          <SubscriptionsInCart />
           <div className="checkout-summary-title">
             <p className="eyebrow">GOD KAFFE. FAIR PRIS.</p>
             <h2>Din bestilling</h2>
@@ -501,7 +594,12 @@ export function CheckoutView() {
           <button
             type="submit"
             className="button dark checkout-pay"
-            disabled={submitting || !options?.payment.ready || !quote}
+            disabled={
+              submitting ||
+              !options?.payment.ready ||
+              !quote ||
+              cart.subscriptions.length > 0
+            }
           >
             <LockKeyhole size={16} />{" "}
             {submitting
